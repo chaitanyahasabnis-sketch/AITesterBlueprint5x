@@ -19,6 +19,7 @@
         <headless>false</headless>
         <baseUrl>https://login.salesforce.com/?locale=in</baseUrl>
         <timeoutSeconds>20</timeoutSeconds>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
     </properties>
 
     <dependencies>
@@ -80,7 +81,18 @@
                 <configuration>
                     <reportVersion>${allure.version}</reportVersion>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+                    <singleFile>true</singleFile>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>allure-single-file-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
