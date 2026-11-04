@@ -108,7 +108,7 @@ public class LoginPage {
     }
 
     public String getPasswordValue() {
-        return waitVisible(passwordInput, "password").getAttribute("value");
+        return waitVisible(passwordInput, "password").getDomProperty("value");
     }
 
     @Step("Set Remember me to {checked}")
@@ -172,19 +172,19 @@ public class LoginPage {
     }
 
     public String getPasswordFieldType() {
-        return waitVisible(passwordInput, "password").getAttribute("type");
+        return waitVisible(passwordInput, "password").getDomAttribute("type");
     }
 
     public String getUsernameValue() {
         try {
-            return wait.until(d -> usernameInput.getAttribute("value"));
+            return wait.until(d -> usernameInput.getDomProperty("value"));
         } catch (TimeoutException e) {
             throw new IllegalStateException("Username field was not present within timeout", e);
         }
     }
 
     public String getLoginButtonLabel() {
-        return waitVisible(loginButton, "Log In button").getAttribute("value");
+        return waitVisible(loginButton, "Log In button").getDomAttribute("value");
     }
 
     public String getTitle() {
