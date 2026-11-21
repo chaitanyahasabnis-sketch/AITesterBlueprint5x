@@ -14,7 +14,7 @@
 - [ ] Existing test suite (IDs, titles, area, automated Y/N, duration)
 - [ ] Time budget
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
@@ -33,7 +33,7 @@ Time budget: [HOURS]
 3. Respect the time budget; automated tests count separately from manual time.
 
 ## E: Examples
-Row: TC-001 | Valid login | Critical | Login module changed | Automated | 1
+Row: [TC ID] | [Test title] | Critical | [Changed area it covers] | Automated | [Minutes]
 
 ## A: Action
 Map changed areas to dependent areas, then place tests in tiers: Critical (must run), Impacted, Extended (if time allows). Give an execution order.

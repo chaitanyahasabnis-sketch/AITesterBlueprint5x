@@ -14,14 +14,14 @@
 - [ ] Language and framework
 - [ ] Team conventions (or point to the framework guide)
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
 ```text
 ## C: Context
 Act as a Senior SDET reviewing [LANGUAGE / FRAMEWORK] test code.
-Conventions: [PASTE or e.g. Chapter_02_Prompt_Engineering/PlaywrightFramework/FRAMEWORK_GUIDE.md]
+Conventions: [PASTE TEAM CONVENTIONS / FRAMEWORK GUIDE]
 Code:
 [PASTE CODE OR DIFF]
 
@@ -32,7 +32,7 @@ Code:
 4. Suggest small fixes; do not rewrite whole files.
 
 ## E: Examples
-Row: LoginPage.java:25 | Minor | Locator | XPath used for an element with an id | Prefer By.id("username") / @FindBy(id = "username")
+Row: [File]:[Line] | [Severity] | [Category] | [What is wrong, quoting the code] | [Smallest fix]
 
 ## A: Action
 Check: assertion correctness, locator strategy, waits (no hard sleeps), test independence and cleanup, hard-coded secrets or URLs, naming, duplication / page-object use, error handling, logging, flakiness risk.

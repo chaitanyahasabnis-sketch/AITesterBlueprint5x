@@ -15,7 +15,7 @@
 - [ ] UI description or screenshots
 - [ ] Scope: UI only / API only / both
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
@@ -34,8 +34,8 @@ API documentation:
 [PASTE]
 
 ## E: Example
-UI: UI-01 | Login with valid credentials | Dashboard opens | P0
-API: API-01 | POST [LOGIN ENDPOINT] valid body | [DOCUMENTED SUCCESS STATUS] + token field present | P0
+UI: UI-01 | [Main user action on PAGE] | [Observable UI result] | P0
+API: API-01 | [METHOD] [ENDPOINT] with valid body | [DOCUMENTED SUCCESS STATUS] + [key response field] present | P0
 
 ## P: Parameters
 - Scope: [UI / API / both].

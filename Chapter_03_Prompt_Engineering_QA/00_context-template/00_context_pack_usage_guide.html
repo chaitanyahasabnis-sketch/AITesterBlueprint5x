@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Context Pack Guide</title><style>
+:root{--bg:#f7f8fa;--surface:#ffffff;--text:#1d2330;--muted:#5b6475;--border:#dfe3ea;--accent:#2457c5;
+--accent-soft:#e8eefb;--ok:#1f7a4d;--ok-soft:#e6f4ec;--warn:#9a5b00;--warn-soft:#fdf2e1;--code:#f1f3f7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11141a;--surface:#191d25;--text:#e6e9ef;
+--muted:#9aa3b2;--border:#2c3340;--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;
+--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}}
+:root[data-theme="dark"]{--bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2c3340;
+--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
+header{margin-bottom:28px}
+.kicker{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+font-size:13px;font-weight:600;margin-right:6px}
+.lead{color:var(--muted);font-size:17px;margin:0}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+.box{border-radius:10px;padding:12px 14px}
+.box.ok{background:var(--ok-soft)}.box.warn{background:var(--warn-soft)}
+.box h3{margin:0 0 6px;font-size:15px}.box.ok h3{color:var(--ok)}.box.warn h3{color:var(--warn)}
+ul,ol{margin:0;padding-left:22px}li{margin:4px 0}
+.letters{display:grid;gap:8px}
+.letter{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.letter b{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+background:var(--accent);color:var(--surface);font-size:20px}
+.letter span{color:var(--muted);font-size:14px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft)}
+.steps li{margin:8px 0}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+.num{font-weight:600;color:var(--accent)}
+code{overflow-wrap:anywhere}
+</style></head>
+<body><main>
+<header>
+  <div class="kicker">Chapter 03 · Context pack · Usage guide</div>
+  <h1>Context Pack</h1>
+  <p class="lead">Four short files that give every prompt the same project background, so you stop re-describing the product and the model stops guessing.</p>
+</header>
+
+<section><h2>1. What is in the pack</h2>
+  <div class="tw"><table><thead><tr><th>#</th><th>File</th><th>Purpose</th><th>When to fill</th></tr></thead><tbody><tr><td class="num">01</td><td><a href="01_context_project_usage_guide.html">Project Context</a></td><td>Describes the application as a whole, so every prompt knows what product, users and environments it is dealing with.</td><td>Once per project. Update it when environments, tech stack or objectives change.</td></tr><tr><td class="num">02</td><td><a href="02_context_feature_usage_guide.html">Feature Context</a></td><td>Captures the requirements of the one feature you are testing right now, with stable IDs.</td><td>Once per feature or story. Make a copy per feature if you test several in parallel.</td></tr><tr><td class="num">03</td><td><a href="03_context_testing_usage_guide.html">Testing Context</a></td><td>Records how your team tests: test types, techniques, priority meaning, tools, data rules and output formats.</td><td>Once per project or team. Update when tools or priorities change.</td></tr><tr><td class="num">04</td><td><a href="04_context_constraints_usage_guide.html">Constraints and Guardrails</a></td><td>The anti-hallucination and safety rules that every prompt must follow, plus your project-specific rules.</td><td>Rarely. Keep the Hard Rules as they are; only add project-specific rules.</td></tr></tbody></table></div>
+  <p>Blank pack: this folder. Filled example: <a href="../00_context-vwo/"><code>../00_context-vwo/</code></a>.</p>
+</section>
+
+<section><h2>2. Set it up for a new project (once)</h2>
+  <ol class="steps">
+    <li>Copy <code>00_context-template/</code> to <code>00_context-&lt;project&gt;/</code>, e.g. <code>00_context-shop/</code>.</li>
+    <li>Fill the files in order 01 → 04, using each file's guide.</li>
+    <li>Mark anything you do not know as <code>[Requires clarification]</code>. Do not guess.</li>
+    <li>For a new feature later, only update <code>02_context_feature.md</code>.</li>
+  </ol>
+</section>
+
+<section><h2>3. Use it with a prompt (every time)</h2>
+  <ol class="steps">
+    <li>Paste <strong>01, 02 and 03</strong> first.</li>
+    <li>Paste the prompt from a <a href="../Daily_QA_Templates/README.md">Daily QA template</a> or <code>../Reusable_Templates/</code>, with its placeholders filled.</li>
+    <li>Paste <strong>04 Constraints</strong> last, so the guardrails are the final instruction.</li>
+    <li>Review the answer: anything marked <em>Requires clarification</em> becomes a question for the team, not a guess.</li>
+  </ol>
+  <p>Paste order:</p>
+  <pre>[contents of 01_context_project.md]
+[contents of 02_context_feature.md]
+[contents of 03_context_testing.md]
+
+---- prompt from Daily_QA_Templates/02_Test_Case_Design_CLEAR.md ----
+## C: Context
+...
+## R: Review
+...
+
+[contents of 04_context_constraints.md]</pre>
+  <p>In Claude Code you can reference files instead of pasting, for example:
+  <code>@Chapter_03_Prompt_Engineering_QA/00_context-shop/01_context_project.md</code>.</p>
+</section>
+
+<section><h2>4. Which files each task needs</h2>
+  <div class="tw"><table><thead><tr><th>Task type</th><th>01 Project</th><th>02 Feature</th><th>03 Testing</th><th>04 Constraints</th></tr></thead><tbody>
+  <tr><td>Requirement analysis, test design, RTM, coverage</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+  <tr><td>Bug report, triage, defect tracking</td><td>✓</td><td>optional</td><td>✓ (priority scheme)</td><td>✓</td></tr>
+  <tr><td>Scrum notes, status report</td><td>optional</td><td>–</td><td>optional</td><td>✓</td></tr>
+  <tr><td>Code review, automation code, PR review</td><td>optional</td><td>optional</td><td>✓ (tools)</td><td>✓</td></tr>
+  </tbody></table></div>
+</section>
+
+<section><h2>5. Keep it healthy</h2>
+  <ul>
+    <li>Update the pack when environments, tools or requirements change, before running prompts.</li>
+    <li>Never store credentials, tokens or personal data in the pack.</li>
+    <li>Keep requirement IDs stable so RTM and coverage reports stay comparable.</li>
+  </ul>
+</section>
+<footer><a href="00_context_pack_usage_guide.html">Context pack overview</a> · <a href="../Daily_QA_Templates/README.md">Daily QA templates</a> · AI Tester Blueprint 5x · Chapter 03</footer>
+</main></body></html>

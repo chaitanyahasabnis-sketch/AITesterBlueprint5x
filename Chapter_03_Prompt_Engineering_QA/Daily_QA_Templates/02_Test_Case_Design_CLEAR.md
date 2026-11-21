@@ -15,7 +15,7 @@
 - [ ] Maximum number of test cases
 - [ ] Priority scheme (default P0/P1/P2)
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
@@ -36,7 +36,7 @@ Use Equivalence Partitioning, Boundary Value Analysis, Decision Tables and Error
 
 ## E: Examples
 Format: Test ID | REQ ID | Scenario | Preconditions | Steps | Test Data | Expected Result | Type | Priority | Requirement Status
-Example: TC-001 | REQ-01 | Log in with valid credentials | Active account exists | 1. Open login 2. Enter email 3. Enter password 4. Submit | <registered_test_email> / <valid_password> | Dashboard opens | Positive | P0 | Confirmed
+Example: TC-001 | REQ-01 | [Main success scenario for REQ-01] | [Required state] | 1. [Step] 2. [Step] 3. [Step] | [<placeholder data>] | [Observable expected result] | Positive | P0 | Confirmed
 
 ## A: Action
 Generate positive, negative and boundary cases, plus UI, accessibility and security cases where the requirements support them.

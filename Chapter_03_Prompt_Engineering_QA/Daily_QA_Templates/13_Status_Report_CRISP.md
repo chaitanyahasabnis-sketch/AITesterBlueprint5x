@@ -15,7 +15,7 @@
 - [ ] Defect summary
 - [ ] Blockers, risks, milestones
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 

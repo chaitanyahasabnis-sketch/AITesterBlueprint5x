@@ -15,7 +15,7 @@
 - [ ] Locators or HTML snippets
 - [ ] Target language and test runner
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
@@ -29,17 +29,15 @@ If a locator is not supplied, leave a clear TODO; do not guess.
 
 ## C: Context
 Framework structure / conventions:
-[PASTE TREE or reference e.g. Chapter_02_Prompt_Engineering/PlaywrightFramework]
+[PASTE FOLDER TREE / FRAMEWORK GUIDE]
 Test cases:
 [PASTE]
 Locators / HTML:
 [PASTE]
 
 ## E: Example
-test('TC-001 valid login opens dashboard', async ({ loginPage }) => {
-  await loginPage.login(env.email, env.password);
-  await expect(loginPage.page).toHaveURL(/dashboard/);
-});
+[PASTE ONE EXISTING TEST FROM YOUR FRAMEWORK]
+The generated tests must copy its structure: imports, fixtures / page objects, naming, assertion style.
 
 ## P: Parameters
 - Language: [TS / Java].

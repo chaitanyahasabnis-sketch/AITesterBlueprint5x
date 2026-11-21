@@ -59,13 +59,13 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
 </section>
 
 <section><h2>2. How the CLEAR framework is used here</h2>
-  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Build [BUILD] is deployed to [ENVIRONMENT]. Run type: [Smoke / Sanity].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Smoke: at most [15] checks, total time &lt;= [30] minutes, one check per critical flow.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: SM-01 | Login | Log in with valid test account | Dashboard opens | Pass if dashboard loads | 2</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Generate the checklist and a go/no-go rule. For sanity, include verification of the fix plus adjacent checks.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. Each critical flow is covered once.</span></div></div></div>
+  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Build [BUILD] is deployed to [ENVIRONMENT]. Run type: [Smoke / Sanity].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Smoke: at most [15] checks, total time &lt;= [30] minutes, one check per critical flow.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: SM-01 | [Critical flow] | [Minimal steps] | [Observable expected result] | Pass if [criterion] | [Minutes]</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Generate the checklist and a go/no-go rule. For sanity, include verification of the fix plus adjacent checks.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. Each critical flow is covered once.</span></div></div></div>
   <p><a href="../Templates/Template_CLEAR.md">Read the full CLEAR definition</a></p>
 </section>
 
 <section><h2>3. Gather your inputs first</h2>
   <ul><li>Build number and environment</li><li>Smoke or Sanity</li><li>Critical flows list</li><li>Change / fix notes (for sanity)</li><li>Time box</li></ul>
-  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+  <p>For project background, fill the blank pack in <a href="../00_context-template/"><code>../00_context-template/</code></a> and paste it above the prompt. <a href="../00_context-vwo/"><code>../00_context-vwo/</code></a> is a filled example.</p>
 </section>
 
 <section><h2>4. Run it step by step</h2>
@@ -92,7 +92,7 @@ Change or fix notes (sanity):
 4. Every check has a clear pass/fail criterion.
 
 ## E: Examples
-Row: SM-01 | Login | Log in with valid test account | Dashboard opens | Pass if dashboard loads | 2
+Row: SM-01 | [Critical flow] | [Minimal steps] | [Observable expected result] | Pass if [criterion] | [Minutes]
 
 ## A: Action
 Generate the checklist and a go/no-go rule. For sanity, include verification of the fix plus adjacent checks.

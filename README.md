@@ -59,7 +59,8 @@ AITesterBlueprint5x/
 │   ├── CRISP.md                          # CRISP prompt → VWO login bug report
 │   ├── Template.md                       # 12-section test-plan template referenced by STAR.md
 │   ├── Templates/                        # STAR / CLEAR / CRISP framework definitions
-│   ├── 00_context-vwo/                   # Context pack: project, feature, testing, constraints
+│   ├── 00_context-template/              # Blank context pack for a new project (placeholders only)
+│   ├── 00_context-vwo/                   # Filled example context pack: project, feature, testing, constraints
 │   ├── Reusable_Templates/               # 18 prompt templates
 │   │   ├── testing/                      # Basic, PRD, API, negative, security, regression
 │   │   ├── bugs/                         # Report, classification, analysis, review, notes→bug, guardrail
@@ -197,7 +198,8 @@ flowchart TD
 |--------|---------------|
 | `Template.md` | 12-section test-plan skeleton (document control → approvals) used by `STAR.md` |
 | `Templates/` | Definitions of STAR, CLEAR and CRISP: letter meanings, when to use, fill-in block, example |
-| `00_context-vwo/` | Four context files (project, feature, testing, constraints) filled from the VWO PRD; gaps marked *Requires clarification* |
+| `00_context-template/` | Blank four-file context pack (project, feature, testing, constraints). Copy it for a new project. Each file has a `*_usage_guide.html`, and `00_context_pack_usage_guide.html` explains the whole pack and the paste order |
+| `00_context-vwo/` | The same four files filled from the VWO PRD; gaps marked *Requires clarification* |
 | `Reusable_Templates/testing/` | Basic TC generation, comprehensive PRD coverage, API, negative, security, regression selection |
 | `Reusable_Templates/bugs/` | Basic report, classification, analysis, report review, notes→bug, anti-hallucination reminder |
 | `Reusable_Templates/api/` | Test suite, validation, authentication, contract, performance, error handling |

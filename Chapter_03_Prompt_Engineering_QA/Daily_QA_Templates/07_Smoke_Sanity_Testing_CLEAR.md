@@ -16,7 +16,7 @@
 - [ ] Change / fix notes (for sanity)
 - [ ] Time box
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
@@ -35,7 +35,7 @@ Change or fix notes (sanity):
 4. Every check has a clear pass/fail criterion.
 
 ## E: Examples
-Row: SM-01 | Login | Log in with valid test account | Dashboard opens | Pass if dashboard loads | 2
+Row: SM-01 | [Critical flow] | [Minimal steps] | [Observable expected result] | Pass if [criterion] | [Minutes]
 
 ## A: Action
 Generate the checklist and a go/no-go rule. For sanity, include verification of the fix plus adjacent checks.

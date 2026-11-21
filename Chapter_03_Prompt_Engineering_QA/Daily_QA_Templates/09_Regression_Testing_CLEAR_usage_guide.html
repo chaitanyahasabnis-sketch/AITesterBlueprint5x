@@ -59,13 +59,13 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
 </section>
 
 <section><h2>2. How the CLEAR framework is used here</h2>
-  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Act as a QA Lead planning regression for [RELEASE].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Select only supplied test IDs; suggestions for new tests go in a separate list.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: TC-001 | Valid login | Critical | Login module changed | Automated | 1</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Map changed areas to dependent areas, then place tests in tiers: Critical (must run), Impacted, Extended (if time allows). Give an execution order.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. Every changed area has at least one test.</span></div></div></div>
+  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Act as a QA Lead planning regression for [RELEASE].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Select only supplied test IDs; suggestions for new tests go in a separate list.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: [TC ID] | [Test title] | Critical | [Changed area it covers] | Automated | [Minutes]</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Map changed areas to dependent areas, then place tests in tiers: Critical (must run), Impacted, Extended (if time allows). Give an execution order.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. Every changed area has at least one test.</span></div></div></div>
   <p><a href="../Templates/Template_CLEAR.md">Read the full CLEAR definition</a></p>
 </section>
 
 <section><h2>3. Gather your inputs first</h2>
   <ul><li>Change description (tickets, modules, PR summary)</li><li>Existing test suite (IDs, titles, area, automated Y/N, duration)</li><li>Time budget</li></ul>
-  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+  <p>For project background, fill the blank pack in <a href="../00_context-template/"><code>../00_context-template/</code></a> and paste it above the prompt. <a href="../00_context-vwo/"><code>../00_context-vwo/</code></a> is a filled example.</p>
 </section>
 
 <section><h2>4. Run it step by step</h2>
@@ -92,7 +92,7 @@ Time budget: [HOURS]
 3. Respect the time budget; automated tests count separately from manual time.
 
 ## E: Examples
-Row: TC-001 | Valid login | Critical | Login module changed | Automated | 1
+Row: [TC ID] | [Test title] | Critical | [Changed area it covers] | Automated | [Minutes]
 
 ## A: Action
 Map changed areas to dependent areas, then place tests in tiers: Critical (must run), Impacted, Extended (if time allows). Give an execution order.

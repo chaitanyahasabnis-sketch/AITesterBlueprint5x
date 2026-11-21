@@ -59,13 +59,13 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
 </section>
 
 <section><h2>2. How the RICE-POT framework is used here</h2>
-  <div class="letters"><div class="letter"><b>R</b><div><strong>Role</strong> — The expert persona the model writes as.<br><span>In this template: You are a Senior SDET working in [Playwright + TypeScript / Selenium + Java + TestNG].</span></div></div><div class="letter"><b>I</b><div><strong>Instructions</strong> — What to produce and the rules for producing it.<br><span>In this template: Automate the supplied test cases following the existing framework: page objects, fixtures, test data kept separate, no hard waits, web-first assertions, secrets from environment variables, one test per TC ID with the ID in the title.</span></div></div><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: [PASTE TREE or reference e.g. Chapter_02_Prompt_Engineering/PlaywrightFramework]</span></div></div><div class="letter"><b>E</b><div><strong>Example</strong> — A sample of the expected output to imitate.<br><span>In this template: test(&#x27;TC-001 valid login opens dashboard&#x27;, async ({ loginPage }) =&gt; {</span></div></div><div class="letter"><b>P</b><div><strong>Parameters</strong> — Hard output constraints: counts, limits, labels for missing data.<br><span>In this template: - Language: [TS / Java].</span></div></div><div class="letter"><b>O</b><div><strong>Output</strong> — The sections and file layout of the answer.<br><span>In this template: 1. One code block per file, with its path as a heading</span></div></div><div class="letter"><b>T</b><div><strong>Tone</strong> — How the answer should read.<br><span>In this template: Production-quality code; comments only where the intent is not obvious.</span></div></div></div>
+  <div class="letters"><div class="letter"><b>R</b><div><strong>Role</strong> — The expert persona the model writes as.<br><span>In this template: You are a Senior SDET working in [Playwright + TypeScript / Selenium + Java + TestNG].</span></div></div><div class="letter"><b>I</b><div><strong>Instructions</strong> — What to produce and the rules for producing it.<br><span>In this template: Automate the supplied test cases following the existing framework: page objects, fixtures, test data kept separate, no hard waits, web-first assertions, secrets from environment variables, one test per TC ID with the ID in the title.</span></div></div><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: [PASTE FOLDER TREE / FRAMEWORK GUIDE]</span></div></div><div class="letter"><b>E</b><div><strong>Example</strong> — A sample of the expected output to imitate.<br><span>In this template: [PASTE ONE EXISTING TEST FROM YOUR FRAMEWORK]</span></div></div><div class="letter"><b>P</b><div><strong>Parameters</strong> — Hard output constraints: counts, limits, labels for missing data.<br><span>In this template: - Language: [TS / Java].</span></div></div><div class="letter"><b>O</b><div><strong>Output</strong> — The sections and file layout of the answer.<br><span>In this template: 1. One code block per file, with its path as a heading</span></div></div><div class="letter"><b>T</b><div><strong>Tone</strong> — How the answer should read.<br><span>In this template: Production-quality code; comments only where the intent is not obvious.</span></div></div></div>
   <p><a href="../../Chapter_02_Prompt_Engineering/Template_RICE_POT/Template.RICEPPOT.md">Read the full RICE-POT definition</a></p>
 </section>
 
 <section><h2>3. Gather your inputs first</h2>
   <ul><li>Test cases to automate</li><li>Framework structure / conventions</li><li>Locators or HTML snippets</li><li>Target language and test runner</li></ul>
-  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+  <p>For project background, fill the blank pack in <a href="../00_context-template/"><code>../00_context-template/</code></a> and paste it above the prompt. <a href="../00_context-vwo/"><code>../00_context-vwo/</code></a> is a filled example.</p>
 </section>
 
 <section><h2>4. Run it step by step</h2>
@@ -87,17 +87,15 @@ If a locator is not supplied, leave a clear TODO; do not guess.
 
 ## C: Context
 Framework structure / conventions:
-[PASTE TREE or reference e.g. Chapter_02_Prompt_Engineering/PlaywrightFramework]
+[PASTE FOLDER TREE / FRAMEWORK GUIDE]
 Test cases:
 [PASTE]
 Locators / HTML:
 [PASTE]
 
 ## E: Example
-test(&#x27;TC-001 valid login opens dashboard&#x27;, async ({ loginPage }) =&gt; {
-  await loginPage.login(env.email, env.password);
-  await expect(loginPage.page).toHaveURL(/dashboard/);
-});
+[PASTE ONE EXISTING TEST FROM YOUR FRAMEWORK]
+The generated tests must copy its structure: imports, fixtures / page objects, naming, assertion style.
 
 ## P: Parameters
 - Language: [TS / Java].

@@ -14,7 +14,7 @@
 - [ ] Test case list with IDs and REQ references
 - [ ] Optional: execution status and defect IDs
 
-> Tip: paste the context pack from [`../00_context-vwo/`](../00_context-vwo/) above the prompt for project background.
+> Tip: for project background, fill the blank context pack [`../00_context-template/`](../00_context-template/) and paste it above the prompt. [`../00_context-vwo/`](../00_context-vwo/) is a filled example.
 
 ## Prompt (copy everything inside the block)
 
@@ -34,7 +34,7 @@ Optional execution results / defects:
 3. Status comes only from execution data; otherwise 'Not executed'.
 
 ## E: Examples
-Row: REQ-03 | Email and password are mandatory | TC-006, TC-007, TC-008 | Negative | 2 Pass, 1 Fail | BUG-101 | Partially verified
+Row: REQ-01 | [Requirement text] | TC-001, TC-002 | Positive, Negative | 1 Pass, 1 Fail | [DEFECT ID] | Partially verified
 
 ## A: Action
 Build forward traceability (REQ -> tests) and backward traceability (test -> REQ), with a status roll-up per requirement.

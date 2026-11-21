@@ -43,7 +43,12 @@ Run the ticket through `references/requirement-checklist.md`. For every item, ma
 If you found some gaps, Output this as a **"Gaps & Questions for the author"** section. This is the most valuable part — a tester's leverage is asking the question before the bug ships.
 
 ### 4. Draft the test plan
-Fill `references/test-plan-template.md` completely. Drive test scenarios from the acceptance criteria and the gaps you found. Cover positive, negative, boundary, and cross-role/permission paths. Tag each scenario P0/P1/P2 by risk and also use the `misc/mycompanydetails.md` as reference.
+Fill `references/test-plan-template.md` completely. Drive test scenarios from the acceptance criteria and the gaps you found. Cover positive, negative, boundary, and cross-role/permission paths. Tag each scenario P0/P1/P2 by risk.
+
+**Company profile input.** Ask the user for `[COMPANY PROFILE]` (company name, product, domain, and logo path if any) and use it for the plan's header and context. If the user does not supply one:
+- offer the saved profile in `misc/mycompanydetails.md` (and logo `misc/company.png`) and use it only if the user confirms it applies to this ticket;
+- otherwise leave company fields as `[COMPANY PROFILE: Not supplied]`. Never guess the company.
+A blank profile to fill in is in `misc/company-profile.template.md`.
 
 ### 5. STOP for human review (mandatory)
 End with a **Human Review Gate**:
@@ -63,7 +68,7 @@ End with a **Human Review Gate**:
 6. Entry / Exit criteria
 --- HUMAN REVIEW GATE ---
 Assumptions made / Open questions / "Approve or edit before I continue"
-Also add the company info and the logo from `misc/company.png` to the output.
+Also add the company info and logo from the confirmed `[COMPANY PROFILE]` to the output.
 ```
 ## Guardrails and Security
 - Never mark the plan "final" — a human owns sign-off.
@@ -76,6 +81,8 @@ Also add the company info and the logo from `misc/company.png` to the output.
 - `scripts/fetch-jira.py` — pull a ticket over the JIRA REST API (standard-library Python)
 - `scripts/fetch-jira.sh` — same, using curl + jq
 - `.env.example` — template for the Jira credentials
+- `misc/company-profile.template.md` — blank `[COMPANY PROFILE]` to fill in
+- `misc/mycompanydetails.md` + `misc/company.png` — saved example profile; use only when the user confirms
 
 
 ## Anti Hallucination Rules

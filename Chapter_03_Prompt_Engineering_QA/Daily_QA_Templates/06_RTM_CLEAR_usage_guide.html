@@ -59,13 +59,13 @@ footer{color:var(--muted);font-size:13px;margin-top:28px}
 </section>
 
 <section><h2>2. How the CLEAR framework is used here</h2>
-  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Act as a QA Engineer building an RTM for [RELEASE].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Use only the supplied IDs; never create new ones.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: REQ-03 | Email and password are mandatory | TC-006, TC-007, TC-008 | Negative | 2 Pass, 1 Fail | BUG-101 | Partially verified</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Build forward traceability (REQ -&gt; tests) and backward traceability (test -&gt; REQ), with a status roll-up per requirement.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. List requirements with zero tests.</span></div></div></div>
+  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Act as a QA Engineer building an RTM for [RELEASE].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Use only the supplied IDs; never create new ones.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: REQ-01 | [Requirement text] | TC-001, TC-002 | Positive, Negative | 1 Pass, 1 Fail | [DEFECT ID] | Partially verified</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Build forward traceability (REQ -&gt; tests) and backward traceability (test -&gt; REQ), with a status roll-up per requirement.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. List requirements with zero tests.</span></div></div></div>
   <p><a href="../Templates/Template_CLEAR.md">Read the full CLEAR definition</a></p>
 </section>
 
 <section><h2>3. Gather your inputs first</h2>
   <ul><li>Requirement list with IDs</li><li>Test case list with IDs and REQ references</li><li>Optional: execution status and defect IDs</li></ul>
-  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+  <p>For project background, fill the blank pack in <a href="../00_context-template/"><code>../00_context-template/</code></a> and paste it above the prompt. <a href="../00_context-vwo/"><code>../00_context-vwo/</code></a> is a filled example.</p>
 </section>
 
 <section><h2>4. Run it step by step</h2>
@@ -93,7 +93,7 @@ Optional execution results / defects:
 3. Status comes only from execution data; otherwise &#x27;Not executed&#x27;.
 
 ## E: Examples
-Row: REQ-03 | Email and password are mandatory | TC-006, TC-007, TC-008 | Negative | 2 Pass, 1 Fail | BUG-101 | Partially verified
+Row: REQ-01 | [Requirement text] | TC-001, TC-002 | Positive, Negative | 1 Pass, 1 Fail | [DEFECT ID] | Partially verified
 
 ## A: Action
 Build forward traceability (REQ -&gt; tests) and backward traceability (test -&gt; REQ), with a status roll-up per requirement.

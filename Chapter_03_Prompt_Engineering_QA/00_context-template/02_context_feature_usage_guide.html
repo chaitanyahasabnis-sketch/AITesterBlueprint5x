@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feature Context Guide</title><style>
+:root{--bg:#f7f8fa;--surface:#ffffff;--text:#1d2330;--muted:#5b6475;--border:#dfe3ea;--accent:#2457c5;
+--accent-soft:#e8eefb;--ok:#1f7a4d;--ok-soft:#e6f4ec;--warn:#9a5b00;--warn-soft:#fdf2e1;--code:#f1f3f7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11141a;--surface:#191d25;--text:#e6e9ef;
+--muted:#9aa3b2;--border:#2c3340;--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;
+--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}}
+:root[data-theme="dark"]{--bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2c3340;
+--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
+header{margin-bottom:28px}
+.kicker{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+font-size:13px;font-weight:600;margin-right:6px}
+.lead{color:var(--muted);font-size:17px;margin:0}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+.box{border-radius:10px;padding:12px 14px}
+.box.ok{background:var(--ok-soft)}.box.warn{background:var(--warn-soft)}
+.box h3{margin:0 0 6px;font-size:15px}.box.ok h3{color:var(--ok)}.box.warn h3{color:var(--warn)}
+ul,ol{margin:0;padding-left:22px}li{margin:4px 0}
+.letters{display:grid;gap:8px}
+.letter{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.letter b{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+background:var(--accent);color:var(--surface);font-size:20px}
+.letter span{color:var(--muted);font-size:14px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft)}
+.steps li{margin:8px 0}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+.num{font-weight:600;color:var(--accent)}
+code{overflow-wrap:anywhere}
+</style></head>
+<body><main>
+<header>
+  <div class="kicker">Context pack · file 2 of 4 · Usage guide</div>
+  <h1>Feature Context</h1>
+  <p class="lead">Captures the requirements of the one feature you are testing right now, with stable IDs.</p>
+  <p>Blank file: <a href="02_context_feature.md"><code>02_context_feature.md</code></a> · Filled example: <a href="../00_context-vwo/02_context_feature.md"><code>00_context-vwo/02_context_feature.md</code></a></p>
+</header>
+
+<section><h2>1. Why this file matters</h2><p>This is the single source of truth for test case design, RTM and coverage. The IDs (F-01, F-02…) are what the other templates trace back to.</p>
+  <div class="grid">
+    <div class="box ok"><h3>When to fill it</h3><p>Once per feature or story. Make a copy per feature if you test several in parallel.</p></div>
+    <div class="box warn"><h3>Golden rule</h3><p>Only write what a source document says. Anything else is <code>[Requires clarification]</code>.</p></div>
+  </div>
+</section>
+
+<section><h2>2. Where to find the information</h2><ul><li>The PRD section for the feature</li><li>The user story / Jira ticket and its acceptance criteria</li><li>Output of Daily template 01 Requirement Analysis</li></ul></section>
+
+<section><h2>3. Fill it in, field by field</h2>
+  <div class="tw"><table><thead><tr><th>Section</th><th>What to write</th><th>Example (VWO pack)</th></tr></thead><tbody><tr><td><strong>Feature: Name, Goal, Source</strong></td><td>What the feature lets the user do and where the requirement comes from.</td><td>Login (email + password) · Authenticate and open the dashboard · PRD &#x27;Login Process&#x27;</td></tr><tr><td><strong>Requirements table</strong></td><td>One requirement per row, wording copied from the source, a stable ID.</td><td>F-01 | Email and password login with secure validation | Login Process</td></tr><tr><td><strong>Acceptance criteria</strong></td><td>The ticket&#x27;s AC exactly as written.</td><td>AC-01: Invalid credentials must not grant access</td></tr><tr><td><strong>Not specified in the source</strong></td><td>Everything the source does not say: messages, limits, roles, timeouts.</td><td>Exact error message text: [Requires clarification]</td></tr></tbody></table></div>
+</section>
+
+<section><h2>4. Step by step</h2>
+  <ol class="steps">
+    <li>Copy the folder <code>00_context-template/</code> to <code>00_context-&lt;project&gt;/</code> (do this once per project).</li>
+    <li>Open <code>02_context_feature.md</code> in the copy and replace each <code>[PLACEHOLDER]</code> using the sources above.</li>
+    <li>Delete lines that do not apply; keep <code>[Requires clarification]</code> for anything unknown.</li>
+    <li>Compare with the filled example in <code>00_context-vwo/</code> if you are unsure of the level of detail.</li>
+    <li>Save. The file is now reusable in every Daily QA template.</li>
+  </ol>
+</section>
+
+<section><h2>5. Common mistakes</h2>
+  <div class="tw"><table><thead><tr><th>Mistake</th><th>Do this instead</th></tr></thead><tbody><tr><td>Rewording requirements &#x27;to make them clearer&#x27;</td><td>Copy the source wording; put your interpretation in a question instead.</td></tr><tr><td>Renumbering IDs between runs</td><td>Keep IDs stable; RTM and coverage reports depend on them.</td></tr><tr><td>Deleting the &#x27;Not specified&#x27; section</td><td>Keep it. It is what stops the model inventing limits and messages.</td></tr></tbody></table></div>
+</section>
+
+<section><h2>6. Check before you use it</h2>
+  <ul>
+    <li>No <code>[PLACEHOLDER]</code> left unfilled (filled or marked <code>[Requires clarification]</code>).</li>
+    <li>Every fact can be traced to a source document.</li>
+    <li>No real credentials, tokens or personal data.</li>
+  </ul>
+</section>
+
+<p><a href="01_context_project_usage_guide.html">← 01 Project Context</a> · <a href="03_context_testing_usage_guide.html">03 Testing Context →</a></p>
+<footer><a href="00_context_pack_usage_guide.html">Context pack overview</a> · <a href="../Daily_QA_Templates/README.md">Daily QA templates</a> · AI Tester Blueprint 5x · Chapter 03</footer>
+</main></body></html>

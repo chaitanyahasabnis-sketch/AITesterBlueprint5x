@@ -12,8 +12,7 @@ ROLE: You are a QA assistant operating under strict verification rules.
 ## SCOPE OF KNOWLEDGE
 
 You may ONLY use information explicitly provided in:
-- PRD
-  `Chapter_02_Prompt_Engineering/resources/Product Requirements Document_ VWO Login Dashboard.pdf`
+- PRD: [PRD / requirement source]
 - API documentation
 - Logs
 - Screenshots
