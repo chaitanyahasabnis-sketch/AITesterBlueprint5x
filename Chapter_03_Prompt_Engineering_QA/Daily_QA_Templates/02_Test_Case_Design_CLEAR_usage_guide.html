@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test Case Design Guide</title>
+<meta name="description" content="How to use the Test Case Design (CLEAR) prompt template.">
+<style>
+:root{--bg:#f7f8fa;--surface:#ffffff;--text:#1d2330;--muted:#5b6475;--border:#dfe3ea;--accent:#2457c5;
+--accent-soft:#e8eefb;--ok:#1f7a4d;--ok-soft:#e6f4ec;--warn:#9a5b00;--warn-soft:#fdf2e1;--code:#f1f3f7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11141a;--surface:#191d25;--text:#e6e9ef;
+--muted:#9aa3b2;--border:#2c3340;--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;
+--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}}
+:root[data-theme="dark"]{--bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2c3340;
+--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
+header{margin-bottom:28px}
+.kicker{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+font-size:13px;font-weight:600;margin-right:6px}
+.lead{color:var(--muted);font-size:17px;margin:0}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+.box{border-radius:10px;padding:12px 14px}
+.box.ok{background:var(--ok-soft)}.box.warn{background:var(--warn-soft)}
+.box h3{margin:0 0 6px;font-size:15px}.box.ok h3{color:var(--ok)}.box.warn h3{color:var(--warn)}
+ul,ol{margin:0;padding-left:22px}li{margin:4px 0}
+.letters{display:grid;gap:8px}
+.letter{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.letter b{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+background:var(--accent);color:var(--surface);font-size:20px}
+.letter span{color:var(--muted);font-size:14px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft)}
+.steps li{margin:8px 0}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+</style></head>
+<body><main>
+<header>
+  <div class="kicker">Daily QA Template 02 of 17 · Usage guide</div>
+  <h1>Test Case Design</h1>
+  <p><span class="badge">CLEAR</span><span class="badge">skill: test-case-designer</span></p>
+  <p class="lead">Design traceable, prioritised test cases with hard scope limits and a self-review pass.</p>
+  <p>Template file: <a href="02_Test_Case_Design_CLEAR.md"><code>02_Test_Case_Design_CLEAR.md</code></a></p>
+</header>
+
+<section><h2>1. When to use it</h2>
+  <div class="grid">
+    <div class="box ok"><h3>Use when</h3><ul><li>Requirements are analysed (ideally with template 01)</li><li>You need a test case set for one feature</li></ul></div>
+    <div class="box warn"><h3>Skip when</h3><ul><li>You only need a quick handful of cases (use Reusable_Templates/testing/01)</li><li>Requirements are still unclear</li></ul></div>
+  </div>
+</section>
+
+<section><h2>2. How the CLEAR framework is used here</h2>
+  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Act as a Senior QA Engineer. Feature: [FEATURE] at [URL / MODULE].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Scope is [FEATURE] only.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Format: Test ID | REQ ID | Scenario | Preconditions | Steps | Test Data | Expected Result | Type | Priority | Requirement Status</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Generate positive, negative and boundary cases, plus UI, accessibility and security cases where the requirements support them.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. Merge duplicates.</span></div></div></div>
+  <p><a href="../Templates/Template_CLEAR.md">Read the full CLEAR definition</a></p>
+</section>
+
+<section><h2>3. Gather your inputs first</h2>
+  <ul><li>Requirements with IDs</li><li>Feature name and URL / module</li><li>Maximum number of test cases</li><li>Priority scheme (default P0/P1/P2)</li></ul>
+  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+</section>
+
+<section><h2>4. Run it step by step</h2>
+  <ol class="steps">
+    <li>Open <a href="02_Test_Case_Design_CLEAR.md"><code>02_Test_Case_Design_CLEAR.md</code></a> and copy the whole <strong>Prompt</strong> block.</li>
+    <li>Replace every <code>[PLACEHOLDER]</code> with your inputs. Leave a placeholder as <em>Not supplied</em> rather than guessing.</li>
+    <li>Keep the <strong>GUARDRAILS</strong> block at the end. It stops the model inventing facts.</li>
+    <li>Paste into Claude (or your agent) and ask for the output in the format you need (Markdown, DOCX, XLSX).</li>
+    <li>Check the result against the review checklist in step 6.</li>
+    <li>Save the output in <code>../output/</code> and add a row to <code>../MyNotes.md</code>.</li>
+  </ol>
+  <p>The prompt you will paste:</p>
+  <pre>## C: Context
+Act as a Senior QA Engineer. Feature: [FEATURE] at [URL / MODULE].
+Requirements:
+[PASTE REQUIREMENTS WITH IDs]
+Use Equivalence Partitioning, Boundary Value Analysis, Decision Tables and Error Guessing.
+
+## L: Limits
+1. Scope is [FEATURE] only.
+2. Do not invent validation rules, limits or exact error messages.
+3. Every test case references at least one REQ ID.
+4. Synthetic test data placeholders only.
+5. Priority: P0 (critical) / P1 (high) / P2 (medium-low).
+6. At most [N] test cases, no duplicates.
+
+## E: Examples
+Format: Test ID | REQ ID | Scenario | Preconditions | Steps | Test Data | Expected Result | Type | Priority | Requirement Status
+Example: TC-001 | REQ-01 | Log in with valid credentials | Active account exists | 1. Open login 2. Enter email 3. Enter password 4. Submit | &lt;registered_test_email&gt; / &lt;valid_password&gt; | Dashboard opens | Positive | P0 | Confirmed
+
+## A: Action
+Generate positive, negative and boundary cases, plus UI, accessibility and security cases where the requirements support them.
+
+## R: Review
+1. Merge duplicates.
+2. Show coverage per REQ ID and list any REQ with no test.
+3. Mark P0 smoke candidates and automation candidates.
+4. List open questions.
+
+GUARDRAILS (always apply)
+- Use ONLY the information pasted into this prompt.
+- Do NOT invent requirements, IDs, error messages, numbers, dates or behaviour.
+- Missing information -&gt; write &quot;Requires clarification&quot; or &quot;Not supplied&quot;.
+- Inferred information -&gt; label it &quot;Inference (low confidence)&quot;.
+- Synthetic data and placeholders only (e.g. &lt;registered_test_email&gt;). No real credentials or personal data.
+- Finish with a short Self-Check: list anything you could not trace to the input.</pre>
+</section>
+
+<section><h2>5. Worked example (VWO login)</h2>
+  <p><strong>Input (excerpt):</strong> REQ-03: Email and password are mandatory.</p>
+  <p><strong>Good output looks like:</strong></p>
+  <pre>| TC-006 | REQ-03 | Submit with empty password | Logged out | 1. Enter email 2. Leave password empty 3. Submit | &lt;registered_test_email&gt; / (blank) | Login not completed; validation text: Requires clarification | Negative | P0 | Requires clarification |</pre>
+  <p><strong>Expected output format:</strong></p>
+  <pre>| Test ID | REQ ID | Scenario | Preconditions | Steps | Test Data | Expected Result | Type | Priority | Requirement Status |</pre>
+</section>
+
+<section><h2>6. Review before you trust it</h2>
+  <ul><li>Every test traces to a REQ ID</li><li>Expected results are observable, not &#x27;works correctly&#x27;</li><li>No invented messages or limits</li><li>Coverage table shows no silent gaps</li></ul>
+</section>
+
+<section><h2>7. Common problems and fixes</h2>
+  <div class="tw"><table><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody><tr><td>Expected result says &#x27;appropriate error shown&#x27;</td><td>Ask for the observable outcome; unknown text becomes &#x27;Requires clarification&#x27;.</td></tr><tr><td>Too many near-duplicate cases</td><td>Lower N and ask for the Review step to merge by equivalence class.</td></tr></tbody></table></div>
+</section>
+
+<section><h2>8. Where the output goes next</h2>
+  <div class="grid">
+    <div><h3>Next templates</h3><ul><li><a href="06_RTM_CLEAR_usage_guide.html">06 · Requirements Traceability Matrix (RTM)</a></li><li><a href="04_Test_Case_Execution_STAR_usage_guide.html">04 · Test Case Execution</a></li><li><a href="15_Automation_Code_Generation_RICEPOT_usage_guide.html">15 · Automation Code Generation</a></li></ul></div>
+    <div><h3>Related quick prompts</h3><ul><li><a href="../CLEAR.md">CLEAR.md</a></li><li><a href="../Reusable_Templates/testing/04_Negative_TC.md">04_Negative_TC.md</a></li><li><a href="../Reusable_Templates/testing/05_Security_TC.md">05_Security_TC.md</a></li></ul></div>
+  </div>
+</section>
+
+<section><h2>9. Turn it into a SKILL.md</h2>
+  <p>Create <code>skills/test-case-designer/SKILL.md</code>, start it with this frontmatter, then paste the template's Prompt,
+  Output format and Review checklist sections underneath as the instructions.</p>
+  <pre>---
+name: &quot;test-case-designer&quot;
+description: &quot;Design traceable, prioritised test cases with hard scope limits and a self-review pass. Use when the user says &quot;write test cases for&quot;, &quot;design test cases&quot;, &quot;create a test suite for this feature&quot;.&quot;
+version: &quot;1.0.0&quot;
+author: &quot;Chaitanya Hasabnis&quot;
+license: &quot;MIT&quot;
+tags:
+  - qa
+  - clear
+---</pre>
+</section>
+
+<footer><a href="README.md">All 17 templates</a> · AI Tester Blueprint 5x · Chapter 03</footer>
+</main></body></html>

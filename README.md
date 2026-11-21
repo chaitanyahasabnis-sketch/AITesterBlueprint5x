@@ -64,6 +64,7 @@ AITesterBlueprint5x/
 │   │   ├── testing/                      # Basic, PRD, API, negative, security, regression
 │   │   ├── bugs/                         # Report, classification, analysis, review, notes→bug, guardrail
 │   │   └── api/                          # Suite, validation, auth, contract, performance, errors
+│   ├── Daily_QA_Templates/               # 17 daily QA task templates (STAR/CLEAR/CRISP/RICE-POT) + HTML usage guides
 │   ├── MyNotes.md                        # Prompt run log
 │   └── output/                           # Generated DOCX / XLSX deliverables
 ├── learnings/                            # Dated learning journal (see AGENTS.md)
@@ -204,6 +205,19 @@ flowchart TD
 
 Each reusable template follows the same Role · Task · Constraints · Format · Input shape and carries the anti-hallucination constraints from Chapter 02.
 
+### Daily QA templates
+
+`Daily_QA_Templates/` holds 17 templates for everyday QA work. Each one uses the framework that fits the task, and each has a matching `*_usage_guide.html` that explains how to run it. Open [Daily_QA_Templates/README.md](Chapter_03_Prompt_Engineering_QA/Daily_QA_Templates/README.md) for the full index.
+
+| Framework | Tasks |
+|-----------|-------|
+| STAR | 01 Requirement Analysis · 04 Test Case Execution · 11 Gap Analysis · 17 Test Coverage |
+| CLEAR | 02 Test Case Design · 06 RTM · 07 Smoke & Sanity · 09 Regression · 14 Code Review · 16 PR Merge / Review |
+| CRISP | 03 Bug Report · 05 Defect Tracking · 08 Bug Triaging · 10 Daily Scrum Notes · 13 Status Report |
+| RICE-POT | 12 UI / API Testing · 15 Automation Code Generation |
+
+Every template has the same sections: purpose, inputs, the framework prompt with a shared guardrails block, output format, a VWO example, review checklist, common problems, next steps, and ready-to-copy `SKILL.md` frontmatter. That makes converting them to skills a mechanical step.
+
 All three prompts share the same guardrails:
 
 - use only the supplied requirements;
@@ -232,13 +246,15 @@ The skills and prompts in this repository follow the same rules:
 
 ## Configuration
 
-The advanced `testplan-creator-skill_a` skill reads Jira credentials from a `.env` file:
+The advanced `testplan-creator-skill_a` skill reads Jira credentials from the shell environment or from the nearest `.env` file (searched from the skill's `scripts/` folder up to the repository root). Copy `Chapter_00_SKILL_Basics/01_Advanced_Skills/testplan-creator-skill_a/.env.example` to `.env` and fill it in:
 
 ```
 JIRA_BASE_URL=https://<your-org>.atlassian.net
 JIRA_EMAIL=<your-email>
 JIRA_API_TOKEN=<your-api-token>
 ```
+
+Test the connection with `python scripts/fetch-jira.py <ISSUE-KEY>` from the skill folder. It uses only the Python standard library. `scripts/fetch-jira.sh` does the same but needs `curl` and `jq`.
 
 The Playwright framework ships `.env.example`. Copy it to `.env` and fill in your own values.
 

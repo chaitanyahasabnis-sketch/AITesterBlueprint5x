@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Automation Code Generation Guide</title>
+<meta name="description" content="How to use the Automation Code Generation (RICE-POT) prompt template.">
+<style>
+:root{--bg:#f7f8fa;--surface:#ffffff;--text:#1d2330;--muted:#5b6475;--border:#dfe3ea;--accent:#2457c5;
+--accent-soft:#e8eefb;--ok:#1f7a4d;--ok-soft:#e6f4ec;--warn:#9a5b00;--warn-soft:#fdf2e1;--code:#f1f3f7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11141a;--surface:#191d25;--text:#e6e9ef;
+--muted:#9aa3b2;--border:#2c3340;--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;
+--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}}
+:root[data-theme="dark"]{--bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2c3340;
+--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
+header{margin-bottom:28px}
+.kicker{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+font-size:13px;font-weight:600;margin-right:6px}
+.lead{color:var(--muted);font-size:17px;margin:0}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+.box{border-radius:10px;padding:12px 14px}
+.box.ok{background:var(--ok-soft)}.box.warn{background:var(--warn-soft)}
+.box h3{margin:0 0 6px;font-size:15px}.box.ok h3{color:var(--ok)}.box.warn h3{color:var(--warn)}
+ul,ol{margin:0;padding-left:22px}li{margin:4px 0}
+.letters{display:grid;gap:8px}
+.letter{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.letter b{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+background:var(--accent);color:var(--surface);font-size:20px}
+.letter span{color:var(--muted);font-size:14px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft)}
+.steps li{margin:8px 0}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+</style></head>
+<body><main>
+<header>
+  <div class="kicker">Daily QA Template 15 of 17 · Usage guide</div>
+  <h1>Automation Code Generation</h1>
+  <p><span class="badge">RICE-POT</span><span class="badge">skill: automation-code-generator</span></p>
+  <p class="lead">Generate automation code for supplied test cases that follows the existing framework&#x27;s conventions.</p>
+  <p>Template file: <a href="15_Automation_Code_Generation_RICEPOT.md"><code>15_Automation_Code_Generation_RICEPOT.md</code></a></p>
+</header>
+
+<section><h2>1. When to use it</h2>
+  <div class="grid">
+    <div class="box ok"><h3>Use when</h3><ul><li>Test cases are approved and selected for automation</li><li>Adding tests to the Playwright or Selenium framework</li></ul></div>
+    <div class="box warn"><h3>Skip when</h3><ul><li>Locators or page structure are unknown and cannot be supplied</li></ul></div>
+  </div>
+</section>
+
+<section><h2>2. How the RICE-POT framework is used here</h2>
+  <div class="letters"><div class="letter"><b>R</b><div><strong>Role</strong> — The expert persona the model writes as.<br><span>In this template: You are a Senior SDET working in [Playwright + TypeScript / Selenium + Java + TestNG].</span></div></div><div class="letter"><b>I</b><div><strong>Instructions</strong> — What to produce and the rules for producing it.<br><span>In this template: Automate the supplied test cases following the existing framework: page objects, fixtures, test data kept separate, no hard waits, web-first assertions, secrets from environment variables, one test per TC ID with the ID in the title.</span></div></div><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: [PASTE TREE or reference e.g. Chapter_02_Prompt_Engineering/PlaywrightFramework]</span></div></div><div class="letter"><b>E</b><div><strong>Example</strong> — A sample of the expected output to imitate.<br><span>In this template: test(&#x27;TC-001 valid login opens dashboard&#x27;, async ({ loginPage }) =&gt; {</span></div></div><div class="letter"><b>P</b><div><strong>Parameters</strong> — Hard output constraints: counts, limits, labels for missing data.<br><span>In this template: - Language: [TS / Java].</span></div></div><div class="letter"><b>O</b><div><strong>Output</strong> — The sections and file layout of the answer.<br><span>In this template: 1. One code block per file, with its path as a heading</span></div></div><div class="letter"><b>T</b><div><strong>Tone</strong> — How the answer should read.<br><span>In this template: Production-quality code; comments only where the intent is not obvious.</span></div></div></div>
+  <p><a href="../../Chapter_02_Prompt_Engineering/Template_RICE_POT/Template.RICEPPOT.md">Read the full RICE-POT definition</a></p>
+</section>
+
+<section><h2>3. Gather your inputs first</h2>
+  <ul><li>Test cases to automate</li><li>Framework structure / conventions</li><li>Locators or HTML snippets</li><li>Target language and test runner</li></ul>
+  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+</section>
+
+<section><h2>4. Run it step by step</h2>
+  <ol class="steps">
+    <li>Open <a href="15_Automation_Code_Generation_RICEPOT.md"><code>15_Automation_Code_Generation_RICEPOT.md</code></a> and copy the whole <strong>Prompt</strong> block.</li>
+    <li>Replace every <code>[PLACEHOLDER]</code> with your inputs. Leave a placeholder as <em>Not supplied</em> rather than guessing.</li>
+    <li>Keep the <strong>GUARDRAILS</strong> block at the end. It stops the model inventing facts.</li>
+    <li>Paste into Claude (or your agent) and ask for the output in the format you need (Markdown, DOCX, XLSX).</li>
+    <li>Check the result against the review checklist in step 6.</li>
+    <li>Save the output in <code>../output/</code> and add a row to <code>../MyNotes.md</code>.</li>
+  </ol>
+  <p>The prompt you will paste:</p>
+  <pre>## R: Role
+You are a Senior SDET working in [Playwright + TypeScript / Selenium + Java + TestNG].
+
+## I: Instructions
+Automate the supplied test cases following the existing framework: page objects, fixtures, test data kept separate, no hard waits, web-first assertions, secrets from environment variables, one test per TC ID with the ID in the title.
+If a locator is not supplied, leave a clear TODO; do not guess.
+
+## C: Context
+Framework structure / conventions:
+[PASTE TREE or reference e.g. Chapter_02_Prompt_Engineering/PlaywrightFramework]
+Test cases:
+[PASTE]
+Locators / HTML:
+[PASTE]
+
+## E: Example
+test(&#x27;TC-001 valid login opens dashboard&#x27;, async ({ loginPage }) =&gt; {
+  await loginPage.login(env.email, env.password);
+  await expect(loginPage.page).toHaveURL(/dashboard/);
+});
+
+## P: Parameters
+- Language: [TS / Java].
+- Files to create or modify: [LIST].
+- At most [N] files.
+- Credentials only via env vars.
+
+## O: Output
+1. One code block per file, with its path as a heading
+2. The command to run the tests
+3. Assumptions and TODOs
+
+## T: Tone
+Production-quality code; comments only where the intent is not obvious.
+
+GUARDRAILS (always apply)
+- Use ONLY the information pasted into this prompt.
+- Do NOT invent requirements, IDs, error messages, numbers, dates or behaviour.
+- Missing information -&gt; write &quot;Requires clarification&quot; or &quot;Not supplied&quot;.
+- Inferred information -&gt; label it &quot;Inference (low confidence)&quot;.
+- Synthetic data and placeholders only (e.g. &lt;registered_test_email&gt;). No real credentials or personal data.
+- Finish with a short Self-Check: list anything you could not trace to the input.</pre>
+</section>
+
+<section><h2>5. Worked example (VWO login)</h2>
+  <p><strong>Input (excerpt):</strong> TC-006 Submit with empty password (expected: not logged in).</p>
+  <p><strong>Good output looks like:</strong></p>
+  <pre>test(&#x27;TC-006 empty password does not log in&#x27;, async ({ loginPage }) =&gt; {
+  await loginPage.fill(env.email, &#x27;&#x27;);
+  await loginPage.submit();
+  await expect(loginPage.page).not.toHaveURL(/dashboard/);
+  // TODO: assert validation text once confirmed (Requires clarification)
+});</pre>
+  <p><strong>Expected output format:</strong></p>
+  <pre>### path/to/File.ts
+```ts
+...
+```
+Run: npx playwright test ...
+Assumptions / TODO: ...</pre>
+</section>
+
+<section><h2>6. Review before you trust it</h2>
+  <ul><li>Follows existing page objects and fixtures</li><li>No hard-coded credentials</li><li>No guessed locators</li><li>Run command provided and works</li></ul>
+</section>
+
+<section><h2>7. Common problems and fixes</h2>
+  <div class="tw"><table><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody><tr><td>New framework patterns invented</td><td>Paste the framework guide and ask it to reuse existing classes.</td></tr><tr><td>Fixed sleeps added</td><td>Ask for web-first assertions / explicit waits only.</td></tr></tbody></table></div>
+</section>
+
+<section><h2>8. Where the output goes next</h2>
+  <div class="grid">
+    <div><h3>Next templates</h3><ul><li><a href="14_Code_Review_CLEAR_usage_guide.html">14 · Code Review (Test Automation)</a></li><li><a href="16_PR_Merge_Review_CLEAR_usage_guide.html">16 · PR Merge / Review</a></li></ul></div>
+    <div><h3>Related quick prompts</h3><ul><li><a href="../../Chapter_02_Prompt_Engineering/REAL_RICE_POT_PW.md">REAL_RICE_POT_PW.md</a></li><li><a href="../../Chapter_02_Prompt_Engineering/REALPROMPT_RICE_POT.md">REALPROMPT_RICE_POT.md</a></li></ul></div>
+  </div>
+</section>
+
+<section><h2>9. Turn it into a SKILL.md</h2>
+  <p>Create <code>skills/automation-code-generator/SKILL.md</code>, start it with this frontmatter, then paste the template's Prompt,
+  Output format and Review checklist sections underneath as the instructions.</p>
+  <pre>---
+name: &quot;automation-code-generator&quot;
+description: &quot;Generate automation code for supplied test cases that follows the existing framework&#x27;s conventions. Use when the user says &quot;automate these test cases&quot;, &quot;generate Playwright tests&quot;, &quot;write Selenium code for&quot;.&quot;
+version: &quot;1.0.0&quot;
+author: &quot;Chaitanya Hasabnis&quot;
+license: &quot;MIT&quot;
+tags:
+  - qa
+  - rice-pot
+---</pre>
+</section>
+
+<footer><a href="README.md">All 17 templates</a> · AI Tester Blueprint 5x · Chapter 03</footer>
+</main></body></html>

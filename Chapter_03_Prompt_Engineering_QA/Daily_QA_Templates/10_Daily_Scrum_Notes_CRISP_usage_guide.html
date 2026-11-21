@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Daily Scrum Notes Guide</title>
+<meta name="description" content="How to use the Daily Scrum Notes (CRISP) prompt template.">
+<style>
+:root{--bg:#f7f8fa;--surface:#ffffff;--text:#1d2330;--muted:#5b6475;--border:#dfe3ea;--accent:#2457c5;
+--accent-soft:#e8eefb;--ok:#1f7a4d;--ok-soft:#e6f4ec;--warn:#9a5b00;--warn-soft:#fdf2e1;--code:#f1f3f7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11141a;--surface:#191d25;--text:#e6e9ef;
+--muted:#9aa3b2;--border:#2c3340;--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;
+--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}}
+:root[data-theme="dark"]{--bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2c3340;
+--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
+header{margin-bottom:28px}
+.kicker{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+font-size:13px;font-weight:600;margin-right:6px}
+.lead{color:var(--muted);font-size:17px;margin:0}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+.box{border-radius:10px;padding:12px 14px}
+.box.ok{background:var(--ok-soft)}.box.warn{background:var(--warn-soft)}
+.box h3{margin:0 0 6px;font-size:15px}.box.ok h3{color:var(--ok)}.box.warn h3{color:var(--warn)}
+ul,ol{margin:0;padding-left:22px}li{margin:4px 0}
+.letters{display:grid;gap:8px}
+.letter{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.letter b{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+background:var(--accent);color:var(--surface);font-size:20px}
+.letter span{color:var(--muted);font-size:14px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft)}
+.steps li{margin:8px 0}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+</style></head>
+<body><main>
+<header>
+  <div class="kicker">Daily QA Template 10 of 17 · Usage guide</div>
+  <h1>Daily Scrum Notes</h1>
+  <p><span class="badge">CRISP</span><span class="badge">skill: scrum-notes-writer</span></p>
+  <p class="lead">Turn raw stand-up notes into clean Yesterday / Today / Blockers notes with action items.</p>
+  <p>Template file: <a href="10_Daily_Scrum_Notes_CRISP.md"><code>10_Daily_Scrum_Notes_CRISP.md</code></a></p>
+</header>
+
+<section><h2>1. When to use it</h2>
+  <div class="grid">
+    <div class="box ok"><h3>Use when</h3><ul><li>Right after the daily stand-up</li><li>You keep a QA log for the sprint</li></ul></div>
+    <div class="box warn"><h3>Skip when</h3><ul><li>You need a stakeholder report (use 13)</li></ul></div>
+  </div>
+</section>
+
+<section><h2>2. How the CRISP framework is used here</h2>
+  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: [PASTE NOTES]</span></div></div><div class="letter"><b>R</b><div><strong>Role</strong> — The expert persona the model writes as.<br><span>In this template: Act as a QA engineer documenting the stand-up.</span></div></div><div class="letter"><b>I</b><div><strong>Instructions</strong> — What to produce and the rules for producing it.<br><span>In this template: For each person: Yesterday / Today / Blockers.</span></div></div><div class="letter"><b>S</b><div><strong>Style</strong> — Tone, length and audience.<br><span>In this template: Bullets of at most 15 words. Past tense for Yesterday, present/future for Today.</span></div></div><div class="letter"><b>P</b><div><strong>Parameters</strong> — Hard output constraints: counts, limits, labels for missing data.<br><span>In this template: - One page.</span></div></div></div>
+  <p><a href="../Templates/Template_CRISP.md">Read the full CRISP definition</a></p>
+</section>
+
+<section><h2>3. Gather your inputs first</h2>
+  <ul><li>Raw notes from the stand-up</li><li>Date and sprint</li><li>Names or roles as they should appear</li></ul>
+  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+</section>
+
+<section><h2>4. Run it step by step</h2>
+  <ol class="steps">
+    <li>Open <a href="10_Daily_Scrum_Notes_CRISP.md"><code>10_Daily_Scrum_Notes_CRISP.md</code></a> and copy the whole <strong>Prompt</strong> block.</li>
+    <li>Replace every <code>[PLACEHOLDER]</code> with your inputs. Leave a placeholder as <em>Not supplied</em> rather than guessing.</li>
+    <li>Keep the <strong>GUARDRAILS</strong> block at the end. It stops the model inventing facts.</li>
+    <li>Paste into Claude (or your agent) and ask for the output in the format you need (Markdown, DOCX, XLSX).</li>
+    <li>Check the result against the review checklist in step 6.</li>
+    <li>Save the output in <code>../output/</code> and add a row to <code>../MyNotes.md</code>.</li>
+  </ol>
+  <p>The prompt you will paste:</p>
+  <pre>## C: Context
+Raw notes from the daily stand-up on [DATE], sprint [SPRINT]:
+[PASTE NOTES]
+
+## R: Role
+Act as a QA engineer documenting the stand-up.
+
+## I: Instructions
+For each person: Yesterday / Today / Blockers.
+Then: QA highlights (test progress, defects raised, environment issues), Decisions, Action items with owner and due date (only if stated).
+Do not attribute anything to a person that is not in the notes.
+
+## S: Style
+Bullets of at most 15 words. Past tense for Yesterday, present/future for Today.
+
+## P: Parameters
+- One page.
+- Use names or roles exactly as given.
+- Missing info: &#x27;Not stated&#x27;.
+
+GUARDRAILS (always apply)
+- Use ONLY the information pasted into this prompt.
+- Do NOT invent requirements, IDs, error messages, numbers, dates or behaviour.
+- Missing information -&gt; write &quot;Requires clarification&quot; or &quot;Not supplied&quot;.
+- Inferred information -&gt; label it &quot;Inference (low confidence)&quot;.
+- Synthetic data and placeholders only (e.g. &lt;registered_test_email&gt;). No real credentials or personal data.
+- Finish with a short Self-Check: list anything you could not trace to the input.</pre>
+</section>
+
+<section><h2>5. Worked example (VWO login)</h2>
+  <p><strong>Input (excerpt):</strong> QA: finished login TCs, 1 bug, today regression; blocked: staging down since morning.</p>
+  <p><strong>Good output looks like:</strong></p>
+  <pre>### QA
+- Yesterday: Completed login test cases; raised BUG-101.
+- Today: Start regression.
+- Blockers: Staging unavailable since morning.</pre>
+  <p><strong>Expected output format:</strong></p>
+  <pre>### &lt;Name&gt;
+- Yesterday: ...
+- Today: ...
+- Blockers: ...
+
+| Action | Owner | Due |</pre>
+</section>
+
+<section><h2>6. Review before you trust it</h2>
+  <ul><li>Nothing attributed that isn&#x27;t in the notes</li><li>Action items have owners only if stated</li><li>Blockers are explicit</li><li>Short bullets</li></ul>
+</section>
+
+<section><h2>7. Common problems and fixes</h2>
+  <div class="tw"><table><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody><tr><td>Model invents due dates</td><td>Ask for &#x27;Not stated&#x27; where no date was given.</td></tr><tr><td>Notes rewritten into long prose</td><td>Repeat the 15-word bullet limit.</td></tr></tbody></table></div>
+</section>
+
+<section><h2>8. Where the output goes next</h2>
+  <div class="grid">
+    <div><h3>Next templates</h3><ul><li><a href="13_Status_Report_CRISP_usage_guide.html">13 · Status Report</a></li></ul></div>
+    <div><h3>Related quick prompts</h3><ul><li>None</li></ul></div>
+  </div>
+</section>
+
+<section><h2>9. Turn it into a SKILL.md</h2>
+  <p>Create <code>skills/scrum-notes-writer/SKILL.md</code>, start it with this frontmatter, then paste the template's Prompt,
+  Output format and Review checklist sections underneath as the instructions.</p>
+  <pre>---
+name: &quot;scrum-notes-writer&quot;
+description: &quot;Turn raw stand-up notes into clean Yesterday / Today / Blockers notes with action items. Use when the user says &quot;write up today&#x27;s standup&quot;, &quot;scrum notes&quot;, &quot;daily standup summary&quot;.&quot;
+version: &quot;1.0.0&quot;
+author: &quot;Chaitanya Hasabnis&quot;
+license: &quot;MIT&quot;
+tags:
+  - qa
+  - crisp
+---</pre>
+</section>
+
+<footer><a href="README.md">All 17 templates</a> · AI Tester Blueprint 5x · Chapter 03</footer>
+</main></body></html>

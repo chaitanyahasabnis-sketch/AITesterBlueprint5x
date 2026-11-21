@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Requirements Traceability Matrix (RTM) Guide</title>
+<meta name="description" content="How to use the Requirements Traceability Matrix (RTM) (CLEAR) prompt template.">
+<style>
+:root{--bg:#f7f8fa;--surface:#ffffff;--text:#1d2330;--muted:#5b6475;--border:#dfe3ea;--accent:#2457c5;
+--accent-soft:#e8eefb;--ok:#1f7a4d;--ok-soft:#e6f4ec;--warn:#9a5b00;--warn-soft:#fdf2e1;--code:#f1f3f7}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11141a;--surface:#191d25;--text:#e6e9ef;
+--muted:#9aa3b2;--border:#2c3340;--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;
+--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}}
+:root[data-theme="dark"]{--bg:#11141a;--surface:#191d25;--text:#e6e9ef;--muted:#9aa3b2;--border:#2c3340;
+--accent:#7ea2f2;--accent-soft:#1d2a45;--ok:#5cc490;--ok-soft:#16301f;--warn:#f0b35c;--warn-soft:#33270f;--code:#222834}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:32px 16px 64px}
+header{margin-bottom:28px}
+.kicker{color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:30px;line-height:1.2;margin:6px 0 10px}
+h2{font-size:20px;margin:0 0 12px}
+.badge{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 12px;
+font-size:13px;font-weight:600;margin-right:6px}
+.lead{color:var(--muted);font-size:17px;margin:0}
+section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}h1{font-size:25px}}
+.box{border-radius:10px;padding:12px 14px}
+.box.ok{background:var(--ok-soft)}.box.warn{background:var(--warn-soft)}
+.box h3{margin:0 0 6px;font-size:15px}.box.ok h3{color:var(--ok)}.box.warn h3{color:var(--warn)}
+ul,ol{margin:0;padding-left:22px}li{margin:4px 0}
+.letters{display:grid;gap:8px}
+.letter{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.letter b{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+background:var(--accent);color:var(--surface);font-size:20px}
+.letter span{color:var(--muted);font-size:14px}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;
+font:13px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;margin:8px 0 0}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--accent-soft)}
+.steps li{margin:8px 0}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.9em}
+a{color:var(--accent)}
+footer{color:var(--muted);font-size:13px;margin-top:28px}
+</style></head>
+<body><main>
+<header>
+  <div class="kicker">Daily QA Template 06 of 17 · Usage guide</div>
+  <h1>Requirements Traceability Matrix (RTM)</h1>
+  <p><span class="badge">CLEAR</span><span class="badge">skill: rtm-builder</span></p>
+  <p class="lead">Map requirements to test cases (and results/defects) and expose untested requirements and orphan tests.</p>
+  <p>Template file: <a href="06_RTM_CLEAR.md"><code>06_RTM_CLEAR.md</code></a></p>
+</header>
+
+<section><h2>1. When to use it</h2>
+  <div class="grid">
+    <div class="box ok"><h3>Use when</h3><ul><li>Test cases exist and need traceability</li><li>Audit or release sign-off needs an RTM</li></ul></div>
+    <div class="box warn"><h3>Skip when</h3><ul><li>Requirements have no IDs yet (run 01 first)</li></ul></div>
+  </div>
+</section>
+
+<section><h2>2. How the CLEAR framework is used here</h2>
+  <div class="letters"><div class="letter"><b>C</b><div><strong>Context</strong> — The background and raw input the model works from.<br><span>In this template: Act as a QA Engineer building an RTM for [RELEASE].</span></div></div><div class="letter"><b>L</b><div><strong>Limits</strong> — Hard rules the output must not break (scope, IDs, invented facts).<br><span>In this template: 1. Use only the supplied IDs; never create new ones.</span></div></div><div class="letter"><b>E</b><div><strong>Examples</strong> — The output format plus one filled row to copy.<br><span>In this template: Row: REQ-03 | Email and password are mandatory | TC-006, TC-007, TC-008 | Negative | 2 Pass, 1 Fail | BUG-101 | Partially verified</span></div></div><div class="letter"><b>A</b><div><strong>Action</strong> — The analysis steps and rules the model must follow.<br><span>In this template: Build forward traceability (REQ -&gt; tests) and backward traceability (test -&gt; REQ), with a status roll-up per requirement.</span></div></div><div class="letter"><b>R</b><div><strong>Review</strong> — The self-check the model runs before handing over.<br><span>In this template: 1. List requirements with zero tests.</span></div></div></div>
+  <p><a href="../Templates/Template_CLEAR.md">Read the full CLEAR definition</a></p>
+</section>
+
+<section><h2>3. Gather your inputs first</h2>
+  <ul><li>Requirement list with IDs</li><li>Test case list with IDs and REQ references</li><li>Optional: execution status and defect IDs</li></ul>
+  <p>For project background, paste the files in <code>../00_context-vwo/</code> above the prompt.</p>
+</section>
+
+<section><h2>4. Run it step by step</h2>
+  <ol class="steps">
+    <li>Open <a href="06_RTM_CLEAR.md"><code>06_RTM_CLEAR.md</code></a> and copy the whole <strong>Prompt</strong> block.</li>
+    <li>Replace every <code>[PLACEHOLDER]</code> with your inputs. Leave a placeholder as <em>Not supplied</em> rather than guessing.</li>
+    <li>Keep the <strong>GUARDRAILS</strong> block at the end. It stops the model inventing facts.</li>
+    <li>Paste into Claude (or your agent) and ask for the output in the format you need (Markdown, DOCX, XLSX).</li>
+    <li>Check the result against the review checklist in step 6.</li>
+    <li>Save the output in <code>../output/</code> and add a row to <code>../MyNotes.md</code>.</li>
+  </ol>
+  <p>The prompt you will paste:</p>
+  <pre>## C: Context
+Act as a QA Engineer building an RTM for [RELEASE].
+Requirements:
+[PASTE REQ IDs + TEXT]
+Test cases:
+[PASTE TC IDs + TITLES + REQ REFS]
+Optional execution results / defects:
+[PASTE or Not supplied]
+
+## L: Limits
+1. Use only the supplied IDs; never create new ones.
+2. Map a test to a requirement only if it references it. If the link is only implied by the title, mark &#x27;Inferred (low confidence)&#x27;.
+3. Status comes only from execution data; otherwise &#x27;Not executed&#x27;.
+
+## E: Examples
+Row: REQ-03 | Email and password are mandatory | TC-006, TC-007, TC-008 | Negative | 2 Pass, 1 Fail | BUG-101 | Partially verified
+
+## A: Action
+Build forward traceability (REQ -&gt; tests) and backward traceability (test -&gt; REQ), with a status roll-up per requirement.
+
+## R: Review
+1. List requirements with zero tests.
+2. List orphan tests (no REQ).
+3. Flag requirements covered only by positive or only by negative tests.
+4. Requirement coverage % = REQs with &gt;= 1 test / total REQs.
+5. List inferred mappings to confirm.
+
+GUARDRAILS (always apply)
+- Use ONLY the information pasted into this prompt.
+- Do NOT invent requirements, IDs, error messages, numbers, dates or behaviour.
+- Missing information -&gt; write &quot;Requires clarification&quot; or &quot;Not supplied&quot;.
+- Inferred information -&gt; label it &quot;Inference (low confidence)&quot;.
+- Synthetic data and placeholders only (e.g. &lt;registered_test_email&gt;). No real credentials or personal data.
+- Finish with a short Self-Check: list anything you could not trace to the input.</pre>
+</section>
+
+<section><h2>5. Worked example (VWO login)</h2>
+  <p><strong>Input (excerpt):</strong> REQ-04 Successful login opens dashboard; TC-002 refs REQ-04; no execution data.</p>
+  <p><strong>Good output looks like:</strong></p>
+  <pre>| REQ-04 | Successful login opens dashboard | TC-002 | Positive | Not executed | - | Not verified |</pre>
+  <p><strong>Expected output format:</strong></p>
+  <pre>| REQ ID | Requirement | Test Case IDs | Test Types | Execution Status | Defects | Verification Status |</pre>
+</section>
+
+<section><h2>6. Review before you trust it</h2>
+  <ul><li>No invented IDs</li><li>Zero-test requirements are listed</li><li>Coverage % shows its formula</li><li>Inferred links are labelled</li></ul>
+</section>
+
+<section><h2>7. Common problems and fixes</h2>
+  <div class="tw"><table><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody><tr><td>Model maps tests by guessing</td><td>Remind it of Limit 2 and ask for the inferred list.</td></tr><tr><td>Statuses filled without execution data</td><td>Ask it to show &#x27;Not executed&#x27; where no data was given.</td></tr></tbody></table></div>
+</section>
+
+<section><h2>8. Where the output goes next</h2>
+  <div class="grid">
+    <div><h3>Next templates</h3><ul><li><a href="17_Test_Coverage_STAR_usage_guide.html">17 · Test Coverage</a></li><li><a href="02_Test_Case_Design_CLEAR_usage_guide.html">02 · Test Case Design</a></li></ul></div>
+    <div><h3>Related quick prompts</h3><ul><li><a href="../Reusable_Templates/testing/02_PRD_TC_Comprehensive.md">02_PRD_TC_Comprehensive.md</a></li></ul></div>
+  </div>
+</section>
+
+<section><h2>9. Turn it into a SKILL.md</h2>
+  <p>Create <code>skills/rtm-builder/SKILL.md</code>, start it with this frontmatter, then paste the template's Prompt,
+  Output format and Review checklist sections underneath as the instructions.</p>
+  <pre>---
+name: &quot;rtm-builder&quot;
+description: &quot;Map requirements to test cases (and results/defects) and expose untested requirements and orphan tests. Use when the user says &quot;build an RTM&quot;, &quot;traceability matrix&quot;, &quot;map requirements to test cases&quot;.&quot;
+version: &quot;1.0.0&quot;
+author: &quot;Chaitanya Hasabnis&quot;
+license: &quot;MIT&quot;
+tags:
+  - qa
+  - clear
+---</pre>
+</section>
+
+<footer><a href="README.md">All 17 templates</a> · AI Tester Blueprint 5x · Chapter 03</footer>
+</main></body></html>
