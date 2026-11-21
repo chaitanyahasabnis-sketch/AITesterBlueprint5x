@@ -20,7 +20,8 @@ flowchart LR
 | 2 | Chapter 01 — LLM Basics | Self-study guide to LLM fundamentals for testers | ✅ Done |
 | 3 | Chapter 02 — Prompt Engineering | RICE-POT prompts with anti-hallucination rules: test cases, gap analysis, and generated Selenium / Playwright frameworks | ✅ Done |
 | 4 | Chapter 03 — Prompt Engineering for QA | STAR / CLEAR / CRISP prompts: test plan, test cases, bug report | ✅ Done |
-| 5 | Next | AI agents and further chapters | 🔜 Planned |
+| 5 | Chapter 04 — AI Agents Basics | Vibe-coded QA agents: design → plan → implementation (React + Express Jira test-plan generator, deployed to Vercel) | ✅ Done |
+| 6 | Chapter 05 — AI Agents with n8n | Importable n8n chat agents: QA-only assistant and Jira-to-test-plan agent | ✅ Done |
 
 ## Repository Structure
 
