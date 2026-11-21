@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VWO Login Gap Analysis</title>
+<style>
+:root {
+  --bg:#f7f7f5; --surface:#ffffff; --ink:#1c1d1f; --muted:#62656b; --line:#e2e2de;
+  --accent:#2f5bd3; --accent-soft:#e7edfb; --p1:#b42318; --p1-bg:#fdecea; --p2:#a15c07; --p2-bg:#fdf3e1;
+  --p3:#3d6b35; --p3-bg:#ebf4e8; --gl:#5b4bb7; --gl-bg:#efecfb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#141518; --surface:#1d1f23; --ink:#ececec; --muted:#9a9ca3; --line:#2e3036;
+    --accent:#8aa8ff; --accent-soft:#25304d; --p1:#ff9b91; --p1-bg:#3d1f1c; --p2:#f3c069; --p2-bg:#3a2d15;
+    --p3:#9fd18f; --p3-bg:#1f3320; --gl:#b9adff; --gl-bg:#2a2545;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#141518; --surface:#1d1f23; --ink:#ececec; --muted:#9a9ca3; --line:#2e3036;
+  --accent:#8aa8ff; --accent-soft:#25304d; --p1:#ff9b91; --p1-bg:#3d1f1c; --p2:#f3c069; --p2-bg:#3a2d15;
+  --p3:#9fd18f; --p3-bg:#1f3320; --gl:#b9adff; --gl-bg:#2a2545;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
+main { max-width:1100px; margin:0 auto; padding:40px 16px 64px; }
+h1 { font-size:28px; margin:0 0 6px; letter-spacing:-.01em; }
+h2 { font-size:18px; margin:40px 0 12px; }
+p { margin:0 0 10px; }
+.lede { color:var(--muted); max-width:760px; }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-top:24px; }
+.stat { background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:16px; }
+.stat b { display:block; font-size:30px; line-height:1.1; font-variant-numeric:tabular-nums; }
+.stat span { color:var(--muted); font-size:13px; }
+.stat.hero b { color:var(--accent); font-size:40px; }
+.two { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media (max-width:760px) { .two { grid-template-columns:1fr; } }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px; }
+.bar-row { display:grid; grid-template-columns:110px 1fr 28px; align-items:center; gap:10px; margin:7px 0; font-size:14px; }
+.bar { height:10px; background:var(--accent-soft); border-radius:5px; overflow:hidden; }
+.bar span { display:block; height:100%; background:var(--accent); border-radius:5px; }
+.bar-n { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; }
+.card ul { margin:0; padding-left:18px; } .card li { margin:6px 0; }
+.filters { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.f { border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:5px 12px; font:inherit; font-size:13px; cursor:pointer; }
+.f.on { background:var(--accent); border-color:var(--accent); color:var(--surface); }
+.tbl { overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px; }
+table { width:100%; border-collapse:collapse; min-width:720px; }
+th, td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--line); font-size:14px; }
+th { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); background:var(--surface); position:sticky; top:0; }
+tr:last-child td { border-bottom:0; }
+.gid { font-weight:700; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.cat { font-size:12px; color:var(--muted); white-space:nowrap; }
+.imp { font-size:12px; font-weight:700; padding:2px 8px; border-radius:6px; white-space:nowrap; }
+.imp-p1 { color:var(--p1); background:var(--p1-bg); } .imp-p2 { color:var(--p2); background:var(--p2-bg); }
+.imp-p3 { color:var(--p3); background:var(--p3-bg); } .imp-global { color:var(--gl); background:var(--gl-bg); }
+.chips { min-width:150px; }
+.chip { display:inline-block; font-size:12px; font-variant-numeric:tabular-nums; border:1px solid var(--line); border-radius:5px; padding:0 6px; margin:0 4px 4px 0; cursor:help; }
+.muted { color:var(--muted); font-size:13px; }
+code { font-size:13px; background:var(--accent-soft); padding:1px 5px; border-radius:4px; }
+footer { margin-top:40px; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+<h1>VWO Login Dashboard — Gap Analysis</h1>
+<p class="lede">Missing or unclear information found when the anti-hallucination rules were applied to the
+VWO Login Dashboard PRD while writing test cases for app.vwo.com. Each gap was answered with
+<code>Insufficient information to determine.</code> instead of a guess.</p>
+
+<div class="stats">
+  <div class="stat hero"><b>44</b><span>missing gaps found</span></div>
+  <div class="stat"><b>37</b><span>missing details in the PRD</span></div>
+  <div class="stat"><b>7</b><span>scope / input gaps</span></div>
+  <div class="stat"><b>44 / 58</b><span>test cases depend on a gap</span></div>
+  <div class="stat"><b>17 / 22</b><span>P1 test cases depend on a gap</span></div>
+</div>
+
+<h2>Where the gaps are</h2>
+<div class="two">
+  <div class="card"><div class="bar-row"><span class="bar-label">Functional</span><span class="bar"><span style="width:100%"></span></span><span class="bar-n">11</span></div><div class="bar-row"><span class="bar-label">Security</span><span class="bar"><span style="width:100%"></span></span><span class="bar-n">11</span></div><div class="bar-row"><span class="bar-label">Scope / Input</span><span class="bar"><span style="width:73%"></span></span><span class="bar-n">8</span></div><div class="bar-row"><span class="bar-label">UX</span><span class="bar"><span style="width:55%"></span></span><span class="bar-n">6</span></div><div class="bar-row"><span class="bar-label">Integration</span><span class="bar"><span style="width:36%"></span></span><span class="bar-n">4</span></div><div class="bar-row"><span class="bar-label">Performance</span><span class="bar"><span style="width:27%"></span></span><span class="bar-n">3</span></div><div class="bar-row"><span class="bar-label">Accessibility</span><span class="bar"><span style="width:9%"></span></span><span class="bar-n">1</span></div></div>
+  <div class="card">
+    <p><b>Impact</b> is the highest priority among the test cases a gap affects.</p>
+    <ul>
+      <li><span class="imp imp-p1">P1</span> 16 gaps affect at least one P1 test case. Resolve these first.</li>
+      <li><span class="imp imp-p2">P2</span> 8 gaps affect P2 cases at most.</li>
+      <li><span class="imp imp-p3">P3</span> 13 gaps affect P3 cases only.</li>
+      <li><span class="imp imp-global">Global</span> 7 gaps concern scope or inputs, not a single test case.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Gap register</h2>
+<p class="muted">Hover a test case number to see its scenario. Full test cases are in
+<code>Test_Cases_with_anti-hallucination_rules.xlsx</code>.</p>
+<div class="filters"><button class="f on" data-f="all">All (44)</button><button class="f" data-f="Functional">Functional (11)</button><button class="f" data-f="Security">Security (11)</button><button class="f" data-f="Scope / Input">Scope / Input (8)</button><button class="f" data-f="UX">UX (6)</button><button class="f" data-f="Integration">Integration (4)</button><button class="f" data-f="Performance">Performance (3)</button><button class="f" data-f="Accessibility">Accessibility (1)</button></div>
+<div class="tbl"><table>
+<thead><tr><th>ID</th><th>Category</th><th>Missing / unclear information</th><th>Impact</th><th>Affected test cases</th></tr></thead>
+<tbody>
+<tr data-cat="Functional" data-impact="P1">
+<td class="gid">G01</td>
+<td><span class="cat">Functional</span></td>
+<td>Exact error message text for failed authentication (wrong password / unregistered email)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_008 · P1 · Verify login with registered email and incorrect password">008</span><span class="chip" title="TC_009 · P1 · Verify login with unregistered email">009</span><span class="chip" title="TC_021 · P2 · Verify authentication error message is clear and actionable">021</span></td></tr><tr data-cat="Functional" data-impact="P1">
+<td class="gid">G02</td>
+<td><span class="cat">Functional</span></td>
+<td>Behavior and messages for empty required fields (Email / Password)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_010 · P1 · Verify login attempt with both Email and Password empty">010</span><span class="chip" title="TC_011 · P2 · Verify login attempt with Email empty and Password filled">011</span><span class="chip" title="TC_012 · P2 · Verify login attempt with Email filled and Password empty">012</span></td></tr><tr data-cat="Functional" data-impact="P1">
+<td class="gid">G03</td>
+<td><span class="cat">Functional</span></td>
+<td>Accepted email format pattern and validation message text</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_016 · P1 · Verify invalid email formats are rejected">016</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G04</td>
+<td><span class="cat">Security</span></td>
+<td>Password complexity rules (length, character classes)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_020 · P3 · Verify password strength indicator gives visual feedback">020</span><span class="chip" title="TC_024 · P1 · Verify new password not meeting complexity rules is rejected">024</span><span class="chip" title="TC_025 · P1 · Verify reset with compliant password and login with new password">025</span></td></tr><tr data-cat="UX" data-impact="P3">
+<td class="gid">G05</td>
+<td><span class="cat">UX</span></td>
+<td>Screen on which the password strength indicator appears (login / signup / reset)</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_020 · P3 · Verify password strength indicator gives visual feedback">020</span></td></tr><tr data-cat="Functional" data-impact="P1">
+<td class="gid">G06</td>
+<td><span class="cat">Functional</span></td>
+<td>Location and label of the Forgot Password entry point on the login page</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_022 · P1 · Verify Forgot Password entry point is reachable from the login page">022</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G07</td>
+<td><span class="cat">Security</span></td>
+<td>Reset token expiry time and single-use behavior</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_023 · P1 · Verify password reset request for registered email">023</span></td></tr><tr data-cat="Functional" data-impact="P3">
+<td class="gid">G08</td>
+<td><span class="cat">Functional</span></td>
+<td>Recovery options other than email-based reset</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_027 · P3 · Verify multiple account recovery options are available">027</span></td></tr><tr data-cat="Security" data-impact="P2">
+<td class="gid">G09</td>
+<td><span class="cat">Security</span></td>
+<td>Whether the old password is invalidated after reset</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_026 · P2 · Verify old password no longer works after reset">026</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G10</td>
+<td><span class="cat">Security</span></td>
+<td>Default session timeout value (PRD says &#x27;configurable&#x27;)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_028 · P1 · Verify session expires after configured inactivity timeout">028</span></td></tr><tr data-cat="Functional" data-impact="P2">
+<td class="gid">G11</td>
+<td><span class="cat">Functional</span></td>
+<td>Remember Me persistence duration</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_013 · P2 · Verify session persists after browser restart when Remember Me is checked">013</span></td></tr><tr data-cat="Functional" data-impact="P3">
+<td class="gid">G12</td>
+<td><span class="cat">Functional</span></td>
+<td>Session behavior when Remember Me is unchecked</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_014 · P3 · Verify session behavior after browser restart when Remember Me is unchecked">014</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G13</td>
+<td><span class="cat">Security</span></td>
+<td>Session token format and cookie attributes</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_029 · P1 · Verify session token is issued after login and transmitted only over HTTPS">029</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G14</td>
+<td><span class="cat">Security</span></td>
+<td>2FA method (TOTP / SMS / email)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_031 · P1 · Verify 2FA-enabled account requires second factor after valid credentials">031</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G15</td>
+<td><span class="cat">Security</span></td>
+<td>Invalid 2FA code behavior, message and retry limits</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_032 · P1 · Verify invalid 2FA code denies access">032</span></td></tr><tr data-cat="Integration" data-impact="P1">
+<td class="gid">G16</td>
+<td><span class="cat">Integration</span></td>
+<td>SSO entry point on the login page (SAML / OAuth)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_034 · P1 · Verify SAML SSO login for an organizational account">034</span><span class="chip" title="TC_035 · P2 · Verify OAuth-based enterprise login">035</span></td></tr><tr data-cat="Integration" data-impact="P3">
+<td class="gid">G17</td>
+<td><span class="cat">Integration</span></td>
+<td>Whether &#x27;Optional&#x27; social login (Google / Microsoft) is enabled in production</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_036 · P3 · Verify login with Google identity provider (if enabled)">036</span><span class="chip" title="TC_037 · P3 · Verify login with Microsoft identity provider (if enabled)">037</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G18</td>
+<td><span class="cat">Security</span></td>
+<td>Rate-limit threshold, lockout window and message</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_040 · P1 · Verify repeated failed login attempts are throttled">040</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G19</td>
+<td><span class="cat">Security</span></td>
+<td>Password hashing algorithm</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_041 · P1 · Verify passwords are stored hashed, not in plain text">041</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G20</td>
+<td><span class="cat">Security</span></td>
+<td>Specific OWASP controls required (e.g. account-enumeration-safe errors)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_009 · P1 · Verify login with unregistered email">009</span><span class="chip" title="TC_042 · P2 · Verify authentication error does not reveal whether the email is registered">042</span></td></tr><tr data-cat="Security" data-impact="P1">
+<td class="gid">G21</td>
+<td><span class="cat">Security</span></td>
+<td>HTTPS enforcement mechanism (redirect vs. HSTS)</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_038 · P1 · Verify login page is served only over HTTPS">038</span></td></tr><tr data-cat="Performance" data-impact="P1">
+<td class="gid">G22</td>
+<td><span class="cat">Performance</span></td>
+<td>Definition of &#x27;standard connection&#x27; and the load metric for the 2-second target</td>
+<td><span class="imp imp-p1">P1</span></td>
+<td class="chips"><span class="chip" title="TC_052 · P1 · Verify login page loads within 2 seconds">052</span></td></tr><tr data-cat="Performance" data-impact="P2">
+<td class="gid">G23</td>
+<td><span class="cat">Performance</span></td>
+<td>Numeric concurrency target (&#x27;thousands&#x27;) and acceptable response time</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_055 · P2 · Verify login under high concurrent load">055</span></td></tr><tr data-cat="Performance" data-impact="P3">
+<td class="gid">G24</td>
+<td><span class="cat">Performance</span></td>
+<td>CDN provider / hostname</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_054 · P3 · Verify static assets are served via CDN">054</span></td></tr><tr data-cat="UX" data-impact="P3">
+<td class="gid">G25</td>
+<td><span class="cat">UX</span></td>
+<td>Location of the Light/Dark theme toggle (login page vs. post-login)</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_046 · P3 · Verify Light and Dark Mode options are available and apply">046</span></td></tr><tr data-cat="Accessibility" data-impact="P3">
+<td class="gid">G26</td>
+<td><span class="cat">Accessibility</span></td>
+<td>High contrast mode: in-app option or OS-level</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_050 · P3 · Verify login page is usable in high contrast mode">050</span></td></tr><tr data-cat="UX" data-impact="P3">
+<td class="gid">G27</td>
+<td><span class="cat">UX</span></td>
+<td>VWO design system specification not provided</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_047 · P3 · Verify login page matches VWO design system">047</span></td></tr><tr data-cat="Functional" data-impact="P2">
+<td class="gid">G28</td>
+<td><span class="cat">Functional</span></td>
+<td>Free trial signup link text and destination URL</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_004 · P2 · Verify free trial signup link navigates to signup">004</span><span class="chip" title="TC_058 · P2 · Verify new user journey: free trial signup leads to onboarding">058</span></td></tr><tr data-cat="UX" data-impact="P3">
+<td class="gid">G29</td>
+<td><span class="cat">UX</span></td>
+<td>Announcement banner text and placement</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_005 · P3 · Verify product announcement banner for new UI launch is displayed">005</span></td></tr><tr data-cat="UX" data-impact="P2">
+<td class="gid">G30</td>
+<td><span class="cat">UX</span></td>
+<td>Loading indicator type during authentication</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_015 · P2 · Verify loading state is shown while authentication is processing">015</span></td></tr><tr data-cat="UX" data-impact="P2">
+<td class="gid">G31</td>
+<td><span class="cat">UX</span></td>
+<td>Form of &#x27;success confirmation&#x27; (message vs. dashboard load)</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_007 · P2 · Verify clear indication of successful login completion">007</span></td></tr><tr data-cat="Functional" data-impact="P3">
+<td class="gid">G32</td>
+<td><span class="cat">Functional</span></td>
+<td>Which context items are preserved for returning users</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_030 · P3 · Verify returning user sees context from previous session">030</span></td></tr><tr data-cat="Integration" data-impact="P3">
+<td class="gid">G33</td>
+<td><span class="cat">Integration</span></td>
+<td>Analytics tool and login success/failure event names</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_056 · P3 · Verify login success and failure events are tracked">056</span></td></tr><tr data-cat="Integration" data-impact="P3">
+<td class="gid">G34</td>
+<td><span class="cat">Integration</span></td>
+<td>Location and channel of the customer support / login assistance option</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_057 · P3 · Verify login assistance / support path is available">057</span></td></tr><tr data-cat="Functional" data-impact="P2">
+<td class="gid">G35</td>
+<td><span class="cat">Functional</span></td>
+<td>Signup form fields and onboarding steps</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_058 · P2 · Verify new user journey: free trial signup leads to onboarding">058</span></td></tr><tr data-cat="Functional" data-impact="P3">
+<td class="gid">G36</td>
+<td><span class="cat">Functional</span></td>
+<td>Logout behavior is not defined in the PRD</td>
+<td><span class="imp imp-p3">P3</span></td>
+<td class="chips"><span class="chip" title="TC_030 · P3 · Verify returning user sees context from previous session">030</span></td></tr><tr data-cat="Scope / Input" data-impact="P2">
+<td class="gid">G37</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>Supported browser and device matrix not specified</td>
+<td><span class="imp imp-p2">P2</span></td>
+<td class="chips"><span class="chip" title="TC_019 · P3 · Verify email-specific keyboard appears on mobile devices">019</span><span class="chip" title="TC_043 · P2 · Verify login page renders responsively on mobile viewport">043</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G38</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>Prompt asks to &#x27;check all pages&#x27;, but the PRD covers only the login dashboard</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G39</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>app.wingify.com is not mentioned in the PRD; its relation to app.vwo.com is unknown</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G40</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>GDPR / CCPA compliance has no testable acceptance criteria</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G41</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>99.9% uptime has no measurement window or method</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G42</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>Test environment and test accounts / credentials not provided</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G43</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>PRD footnote citations (1–14) reference sources that are not included</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr><tr data-cat="Scope / Input" data-impact="Global">
+<td class="gid">G44</td>
+<td><span class="cat">Scope / Input</span></td>
+<td>Google Docs PRD link is private/not readable; the local PDF was used instead</td>
+<td><span class="imp imp-global">Global</span></td>
+<td class="chips"><span class="muted">Whole test suite (scope / input)</span></td></tr>
+</tbody></table></div>
+
+<h2>How this was produced</h2>
+<div class="card"><ul>
+<li><b>Source:</b> <code>resources/Product Requirements Document_ VWO Login Dashboard.pdf</code> (7 pages). This was the only input used.</li>
+<li><b>Prompt:</b> RICE-POT template with the anti-hallucination Parameters block (<code>RICEPOT_Template_with_anti-hallucination.md</code>).</li>
+<li><b>Rules applied:</b> every assertion must trace to the PRD; missing details are answered with "Insufficient information to determine."; inferred details are labelled "Inference (low confidence)".</li>
+<li><b>Status:</b> none of the test cases have been run yet. This analysis covers the requirements only.</li>
+</ul></div>
+
+<footer>Generated from the Gap_Register sheet of Test_Cases_with_anti-hallucination_rules.xlsx.</footer>
+</main>
+<script>
+document.querySelectorAll('.f').forEach(function (b) {
+  b.addEventListener('click', function () {
+    document.querySelectorAll('.f').forEach(function (x) { x.classList.remove('on'); });
+    b.classList.add('on');
+    var f = b.getAttribute('data-f');
+    document.querySelectorAll('tbody tr').forEach(function (r) {
+      r.style.display = (f === 'all' || r.getAttribute('data-cat') === f) ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

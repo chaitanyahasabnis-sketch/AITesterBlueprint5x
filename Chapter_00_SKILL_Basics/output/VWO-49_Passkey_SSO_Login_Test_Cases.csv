@@ -1,0 +1,111 @@
+﻿Scenario_TID,TestCase Description,PreCondition,TestSteps,Expected Result,Actual Result,Steps to Execute,Expected Result,Actual Result,Status,Executed QA Name,Misc (Comments),Priority,Is_Automated
+TS01_TC01,"Verify ""Sign in using SSO"" button is visible on the login page",User is on the VWO login page (app.vwo.com),Open login page; observe login options,"""Sign in using SSO"" button is visible on the login page",,"1. Launch browser
+2. Navigate to the VWO login page
+3. Observe the available login options","1. Browser opens
+2. Login page loads
+3. ""Sign in using SSO"" button is displayed",,Not Executed,,Covered by automated run TC-01 (n8n + Playwright MCP); all runs 10-Oct-2026 to 20-Oct-2026 were BLOCKED.,High,Yes
+TS01_TC02,"Verify ""Sign in with Passkey"" button is visible on the login page",User is on the VWO login page (app.vwo.com),Open login page; observe login options,"""Sign in with Passkey"" button is visible on the login page",,"1. Launch browser
+2. Navigate to the VWO login page
+3. Observe the available login options","1. Browser opens
+2. Login page loads
+3. ""Sign in with Passkey"" button is displayed",,Not Executed,,Covered by automated run TC-01 (n8n + Playwright MCP); all runs 10-Oct-2026 to 20-Oct-2026 were BLOCKED.,High,Yes
+TS01_TC03,"Verify SSO and Passkey buttons are positioned below the ""Sign in with Google"" option",User is on the VWO login page (app.vwo.com),"Open login page; compare position of Google, SSO and Passkey buttons","""Sign in using SSO"" and ""Sign in with Passkey"" are displayed below ""Sign in with Google"" in the correct order",,"1. Navigate to the VWO login page
+2. Locate ""Sign in with Google""
+3. Locate ""Sign in using SSO"" and ""Sign in with Passkey""","1. Login page loads
+2. Google option is visible
+3. Both new buttons appear below the Google option",,Not Executed,,Covered by automated run TC-01 (n8n + Playwright MCP); all runs 10-Oct-2026 to 20-Oct-2026 were BLOCKED.,High,Yes
+TS01_TC04,Verify new login options are added alongside existing authentication methods,User is on the VWO login page (app.vwo.com),Open login page; check existing and new login options together,"Existing options (email/password, ""Sign in with Google"") are still shown together with the two new buttons",,"1. Navigate to the VWO login page
+2. Check email and password fields
+3. Check ""Sign in with Google""
+4. Check SSO and Passkey buttons","1. Login page loads
+2. Email/password fields present
+3. Google option present
+4. Both new buttons present",,Not Executed,,Ensures no existing method was removed when new options were added.,Medium,No
+TS02_TC01,Verify successful login via SSO with valid SSO credentials,User is on the VWO login page (app.vwo.com); SSO identity provider is already configured for the test account (configuration is out of scope); valid SSO test credentials available,"Click ""Sign in using SSO""; provide valid SSO credentials; complete authentication","User is successfully authenticated and redirected to the dashboard (URL contains ""/dashboard"")",,"1. Click ""Sign in using SSO""
+2. Enter valid SSO credentials at the identity provider
+3. Submit / complete authentication","1. SSO flow starts
+2. Credentials are accepted
+3. User lands on the VWO dashboard",,Not Executed,,Covered by automated run TC-02 (n8n + Playwright MCP); all runs 10-Oct-2026 to 20-Oct-2026 were BLOCKED.,High,Yes
+TS02_TC02,Verify error message is shown for invalid SSO credentials,User is on the VWO login page (app.vwo.com); SSO identity provider is already configured for the test account (configuration is out of scope),"Click ""Sign in using SSO""; provide invalid SSO credentials; submit","Appropriate error message (e.g. ""Invalid credentials"") is displayed and the user remains on the login page",,"1. Click ""Sign in using SSO""
+2. Enter an incorrect username/password at the identity provider
+3. Submit","1. SSO flow starts
+2. Credentials entered
+3. Error message is displayed; user is not logged in",,Not Executed,,Covered by automated run TC-03 (n8n + Playwright MCP); all runs 10-Oct-2026 to 20-Oct-2026 were BLOCKED.,High,Yes
+TS02_TC03,Verify SSO login works across all configured identity providers,User is on the VWO login page (app.vwo.com); more than one identity provider configured; valid credentials for each provider,Repeat SSO login for every configured identity provider,User is authenticated and redirected to the dashboard for each configured identity provider,,"1. Click ""Sign in using SSO""
+2. Log in using identity provider #1
+3. Log out
+4. Repeat steps 1-3 for each remaining configured provider","1. SSO flow starts
+2. Dashboard displayed
+3. User logged out
+4. Login succeeds for every provider",,Not Executed,,Compatibility criterion: SSO should work across all configured identity providers.,High,No
+TS03_TC01,Verify successful login via Passkey with a registered and verified passkey,User is on the VWO login page (app.vwo.com); A passkey is already registered for the test account (registration is out of scope - separate story); supported browser/device,"Click ""Sign in with Passkey""; select registered passkey; complete verification",User is logged in successfully and redirected to the dashboard,,"1. Click ""Sign in with Passkey""
+2. Select the registered passkey in the browser/device prompt
+3. Complete device verification","1. Passkey prompt is shown
+2. Passkey is selected
+3. Verification succeeds and dashboard is displayed",,Not Executed,,,High,No
+TS03_TC02,Verify fallback/guidance message when no passkey is registered,User is on the VWO login page (app.vwo.com); test account has NO passkey registered; supported browser/device,"Click ""Sign in with Passkey"" with no passkey available",A fallback or guidance message is displayed and the user stays on the login page,,"1. Click ""Sign in with Passkey""
+2. Observe the response when no passkey is available","1. Passkey flow starts
+2. Fallback/guidance message is shown; user is not logged in",,Not Executed,,Covered by automated run TC-04 (n8n + Playwright MCP); all runs 10-Oct-2026 to 20-Oct-2026 were BLOCKED.,High,Yes
+TS04_TC01,Verify proper error message when SSO authentication fails,User is on the VWO login page (app.vwo.com); SSO identity provider is already configured for the test account (configuration is out of scope),Start SSO login; let authentication at the identity provider fail; return to VWO,A proper error message for failed SSO authentication is displayed; user is not logged in,,"1. Click ""Sign in using SSO""
+2. Do not complete authentication successfully at the identity provider
+3. Observe the VWO login page","1. SSO flow starts
+2. Authentication fails
+3. Clear SSO failure error message is shown",,Not Executed,,Error Handling criterion: Failed SSO authentication.,High,No
+TS04_TC02,Verify proper error message when Passkey authentication fails,User is on the VWO login page (app.vwo.com); A passkey is already registered for the test account (registration is out of scope - separate story); supported browser/device,Start Passkey login; fail device verification,A proper error message for passkey authentication failure is displayed; user is not logged in,,"1. Click ""Sign in with Passkey""
+2. Fail / do not complete the device verification
+3. Observe the login page","1. Passkey prompt is shown
+2. Verification fails
+3. Passkey failure error message is shown",,Not Executed,,Error Handling criterion: Passkey authentication failure.,High,No
+TS04_TC03,Verify proper error message on an unsupported browser/device for passkeys,User is on the VWO login page using a browser/device that does not support passkeys,"Open login page on unsupported browser/device; click ""Sign in with Passkey""",A proper message indicating the browser/device is unsupported for passkeys is displayed,,"1. Open the VWO login page on an unsupported browser/device
+2. Click ""Sign in with Passkey""
+3. Observe the response","1. Login page loads
+2. Passkey flow is attempted
+3. Unsupported browser/device message is shown",,Not Executed,,Error Handling criterion: Unsupported browser/device for passkeys.,Medium,No
+TS05_TC01,Verify Passkey login works on supported browsers/devices,A passkey is already registered for the test account (registration is out of scope - separate story); list of supported browsers/devices available,Repeat Passkey login on each supported browser/device,Passkey login succeeds and redirects to the dashboard on every supported browser/device,,"1. Open the VWO login page on supported browser/device #1
+2. Log in with ""Sign in with Passkey""
+3. Log out
+4. Repeat for each supported browser/device","1. Login page loads
+2. Dashboard displayed
+3. User logged out
+4. Login succeeds on all supported combinations",,Not Executed,,Compatibility criterion: Passkey login should work on supported browsers/devices only.,Medium,No
+TS06_TC01,Verify SSO flow uses a secure protocol (OAuth/SAML),User is on the VWO login page (app.vwo.com); SSO identity provider is already configured for the test account (configuration is out of scope); browser developer tools available,Open DevTools Network tab; perform SSO login; inspect authentication requests,SSO authentication follows OAuth or SAML protocol over a secure connection,,"1. Open DevTools > Network
+2. Click ""Sign in using SSO"" and complete login
+3. Inspect redirect/authentication requests","1. Network tab recording
+2. Login completes
+3. Requests follow OAuth/SAML flow over HTTPS",,Not Executed,,Security criterion: secure protocols (OAuth/SAML/WebAuthn).,High,No
+TS06_TC02,Verify Passkey flow uses WebAuthn,User is on the VWO login page (app.vwo.com); A passkey is already registered for the test account (registration is out of scope - separate story); browser developer tools available,Open DevTools; perform Passkey login; inspect authentication calls,Passkey authentication is performed via WebAuthn over a secure connection,,"1. Open DevTools > Network
+2. Click ""Sign in with Passkey"" and complete verification
+3. Inspect authentication requests","1. Network tab recording
+2. Login completes
+3. WebAuthn-based flow observed over HTTPS",,Not Executed,,Security criterion: secure protocols (OAuth/SAML/WebAuthn).,High,No
+TS06_TC03,Verify no sensitive data is exposed in the UI during SSO and Passkey login,User is on the VWO login page (app.vwo.com),Perform SSO and Passkey login and failure flows; review all UI screens and messages,"No sensitive data (credentials, tokens, keys) is displayed in the UI, URLs or error messages",,"1. Perform successful and failed SSO login
+2. Perform successful and failed Passkey login
+3. Review page content, URLs and error messages","1-2. Flows complete
+3. No sensitive data visible anywhere in the UI",,Not Executed,,Security criterion: no sensitive data exposed in UI.,High,No
+TS06_TC04,Verify no sensitive data is exposed in network logs during SSO and Passkey login,User is on the VWO login page (app.vwo.com); browser developer tools available,Record network traffic during SSO and Passkey login; inspect requests/responses,"No sensitive data (plain-text credentials, secrets) is exposed in network logs",,"1. Open DevTools > Network with ""Preserve log"" enabled
+2. Perform SSO login, then Passkey login
+3. Inspect request URLs, headers, payloads and responses","1. Network recording
+2. Flows complete
+3. No sensitive data exposed in the logs",,Not Executed,,Security criterion: no sensitive data exposed in network logs.,High,No
+TS07_TC01,Verify SSO and Passkey buttons are responsive across screen sizes,User is on the VWO login page (app.vwo.com),"View login page at desktop, tablet and mobile widths","Both buttons remain visible, readable, correctly positioned and clickable at every screen size",,"1. Open login page at desktop width
+2. Resize to tablet width
+3. Resize to mobile width
+4. Click each new button at each size","1-3. Layout adapts; buttons stay below Google option
+4. Buttons respond to click/tap",,Not Executed,,Test scenario: Verify UI responsiveness.,Medium,No
+TS07_TC02,Verify SSO and Passkey buttons are accessible via keyboard,User is on the VWO login page (app.vwo.com),Navigate login page using keyboard only; activate each new button,"Both buttons can be reached with Tab, show visible focus, and can be activated with Enter/Space",,"1. Press Tab repeatedly from the top of the login page
+2. Stop on ""Sign in using SSO"" and press Enter
+3. Return and repeat for ""Sign in with Passkey""","1. Focus moves in logical order
+2. SSO flow starts
+3. Passkey flow starts",,Not Executed,,Test scenario: Verify accessibility.,Medium,No
+TS07_TC03,Verify SSO and Passkey buttons are announced correctly by a screen reader,User is on the VWO login page (app.vwo.com); screen reader enabled,Navigate to each new button with a screen reader,"Screen reader announces ""Sign in using SSO"" and ""Sign in with Passkey"" with correct names and button role",,"1. Enable a screen reader
+2. Navigate to ""Sign in using SSO""
+3. Navigate to ""Sign in with Passkey""","1. Screen reader active
+2. Announced correctly as a button
+3. Announced correctly as a button",,Not Executed,,Test scenario: Verify accessibility.,Low,No
+TS08_TC01,Verify existing email/password login still works after adding new options,User is on the VWO login page (app.vwo.com); valid email/password test account available,Log in with email and password,User is authenticated and redirected to the dashboard as before,,"1. Enter a valid email
+2. Enter a valid password
+3. Click Sign in","1-2. Values accepted
+3. Dashboard is displayed",,Not Executed,,Regression: existing authentication methods must remain unaffected.,High,No
+TS08_TC02,"Verify existing ""Sign in with Google"" login still works after adding new options",User is on the VWO login page (app.vwo.com); valid Google test account available,"Click ""Sign in with Google""; complete Google authentication",User is authenticated and redirected to the dashboard as before,,"1. Click ""Sign in with Google""
+2. Complete Google authentication","1. Google sign-in starts
+2. Dashboard is displayed",,Not Executed,,Regression: existing authentication methods must remain unaffected.,Medium,No

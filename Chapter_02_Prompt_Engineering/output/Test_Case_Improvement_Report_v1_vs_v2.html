@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test Case Improvement Report</title>
+<style>
+:root {
+  --bg:#f7f7f5; --surface:#fff; --ink:#1c1d1f; --muted:#62656b; --line:#e2e2de;
+  --accent:#2f5bd3; --accent-soft:#e7edfb; --good:#2e6b2a; --good-bg:#e6f2e3; --bad:#a3361f; --bad-bg:#fbe9e5;
+  --warn:#8a5a00; --warn-bg:#fcf1db;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#141518; --surface:#1d1f23; --ink:#ececec; --muted:#9a9ca3; --line:#2e3036;
+    --accent:#8aa8ff; --accent-soft:#25304d; --good:#9fd18f; --good-bg:#1f3320; --bad:#ff9b91; --bad-bg:#3d1f1c;
+    --warn:#f3c069; --warn-bg:#3a2d15;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#141518; --surface:#1d1f23; --ink:#ececec; --muted:#9a9ca3; --line:#2e3036;
+  --accent:#8aa8ff; --accent-soft:#25304d; --good:#9fd18f; --good-bg:#1f3320; --bad:#ff9b91; --bad-bg:#3d1f1c;
+  --warn:#f3c069; --warn-bg:#3a2d15;
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; }
+main { max-width:1050px; margin:0 auto; padding:40px 16px 64px; }
+h1 { font-size:28px; margin:0 0 6px; letter-spacing:-.01em; }
+h2 { font-size:18px; margin:40px 0 12px; }
+p { margin:0 0 10px; }
+.lede { color:var(--muted); max-width:760px; }
+.verdict { background:var(--surface); border:1px solid var(--line); border-left:5px solid var(--good); border-radius:10px; padding:18px 20px; margin-top:24px; }
+.verdict h2 { margin:0 0 8px; font-size:20px; }
+.verdict ul { margin:8px 0 0; padding-left:18px; } .verdict li { margin:5px 0; }
+.tag { display:inline-block; font-size:12px; font-weight:700; padding:2px 8px; border-radius:6px; background:var(--good-bg); color:var(--good); margin-right:6px; }
+.tag.warn { background:var(--warn-bg); color:var(--warn); }
+.tbl { overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px; }
+table { width:100%; border-collapse:collapse; min-width:680px; }
+th, td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--line); font-size:14px; }
+th { font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+tr:last-child td { border-bottom:0; }
+.num { font-variant-numeric:tabular-nums; font-weight:600; text-align:right; width:60px; }
+.d { font-size:12px; font-weight:700; padding:2px 8px; border-radius:6px; white-space:nowrap; }
+.d.good { background:var(--good-bg); color:var(--good); } .d.bad { background:var(--bad-bg); color:var(--bad); }
+.d.same { color:var(--muted); font-weight:400; }
+.muted { color:var(--muted); font-size:13px; }
+.gid { font-weight:700; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.kind { font-size:12px; font-weight:700; padding:2px 8px; border-radius:6px; white-space:nowrap; }
+.k-added, .k-resolved { background:var(--good-bg); color:var(--good); }
+.k-updated { background:var(--accent-soft); color:var(--accent); }
+.k-new { background:var(--warn-bg); color:var(--warn); }
+.basis { font-size:12px; white-space:nowrap; } .basis.inf { color:var(--warn); } .basis.ver { color:var(--good); }
+.old { color:var(--muted); text-decoration:line-through; }
+.card { background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px; }
+.card ul { margin:0; padding-left:18px; } .card li { margin:6px 0; }
+code { font-size:13px; background:var(--accent-soft); padding:1px 5px; border-radius:4px; }
+footer { margin-top:40px; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<main>
+<h1>Did the new information produce better test cases?</h1>
+<p class="lede">Comparison of the VWO login test cases before (v1) and after (v2) adding one new fact:
+<b>app.vwo.com and app.wingify.com are the same application, and opening app.vwo.com now lands on app.wingify.com.</b>
+Both versions were written with the RICE-POT template and the anti-hallucination rules, using the same PRD.</p>
+
+<div class="verdict">
+  <h2>Verdict: Yes, v2 is better, but the improvement is narrow</h2>
+  <ul>
+    <li><span class="tag">More accurate</span>All test cases now start at the real login URL, <code>https://app.wingify.com/#/login</code>. In v1, 7 cases navigated to the old address.</li>
+    <li><span class="tag">Better coverage</span>The domain redirect is now tested (5 cases; v1 had none). That includes HTTPS on the old address and logging in after the redirect.</li>
+    <li><span class="tag">Less guessing</span>1 gap closed (the relation between the two domains), and 3 new cases are verified from your input instead of inferred.</li>
+    <li><span class="tag warn">Not a full fix</span>Open gaps went from 44 to 46. The new fact answered one question but raised 3 more about how the redirect behaves. The 43 original PRD gaps (error messages, password rules, timeouts and so on) are untouched, because the new fact isn't about them.</li>
+  </ul>
+  <p style="margin-top:10px">The anti-hallucination rules worked as intended. The new fact was used where it applies, and the rules stopped it from being stretched to guess things it doesn't say, such as the redirect status code or whether logins carry over between the two domains.</p>
+</div>
+
+<h2>v1 vs v2 at a glance</h2>
+<div class="tbl"><table>
+<thead><tr><th>Measure</th><th class="num">v1</th><th class="num">v2</th><th>Change</th><th>Why</th></tr></thead>
+<tbody><tr><td>Total test cases</td><td class="num">58</td><td class="num">63</td><td><span class="d good">+5</span></td><td class="muted">5 new cases for the domain redirect</td></tr><tr><td>Verified test cases (PRD or user input)</td><td class="num">49</td><td class="num">52</td><td><span class="d good">+3</span></td><td class="muted">3 newly verified from your input</td></tr><tr><td>Inferred test cases (low confidence)</td><td class="num">9</td><td class="num">11</td><td><span class="d bad">+2</span></td><td class="muted">2 new redirect cases can&#x27;t be fully confirmed yet</td></tr><tr><td>Test cases covering the app.vwo.com → app.wingify.com redirect</td><td class="num">0</td><td class="num">5</td><td><span class="d good">+5</span></td><td class="muted">v1 had no redirect coverage</td></tr><tr><td>Test cases still navigating to the old URL</td><td class="num">7</td><td class="num">0</td><td><span class="d good">-7</span></td><td class="muted">All now start at https://app.wingify.com/#/login</td></tr><tr><td>Open gaps</td><td class="num">44</td><td class="num">46</td><td><span class="d bad">+2</span></td><td class="muted">1 closed, 3 new questions raised</td></tr><tr><td>Test cases that depend on an open gap</td><td class="num">44</td><td class="num">48</td><td><span class="d bad">+4</span></td><td class="muted">New redirect cases add their own open questions</td></tr><tr><td>P1 test cases that depend on an open gap</td><td class="num">17</td><td class="num">19</td><td><span class="d bad">+2</span></td><td class="muted">out of 22 (v1) and 25 (v2) P1 cases</td></tr></tbody></table></div>
+
+<h2>Test cases added or changed (5 added, 7 updated)</h2>
+<div class="tbl"><table>
+<thead><tr><th>ID</th><th>Change</th><th>Scenario</th><th>Expected result / what changed</th><th>Evidence</th></tr></thead>
+<tbody><tr><td class="gid">TC_059</td><td><span class="kind k-added">Added</span></td><td>Verify https://app.vwo.com redirects to the app.wingify.com login page</td><td>Browser ends on the app.wingify.com login page (https://app.wingify.com/#/login).</td><td><span class="basis ver">Verified (User input)</span></td></tr><tr><td class="gid">TC_060</td><td><span class="kind k-added">Added</span></td><td>Verify http://app.vwo.com (plain HTTP) ends on HTTPS app.wingify.com</td><td>Browser ends on https://app.wingify.com login page with a valid SSL/TLS certificate.</td><td><span class="basis ver">Verified (User input)</span></td></tr><tr><td class="gid">TC_061</td><td><span class="kind k-added">Added</span></td><td>Verify login started from app.vwo.com succeeds after the redirect</td><td>User is authenticated and transitioned to the main VWO dashboard on app.wingify.com.</td><td><span class="basis ver">Verified (User input)</span></td></tr><tr><td class="gid">TC_062</td><td><span class="kind k-added">Added</span></td><td>Verify old app.vwo.com deep links are preserved after redirect</td><td>Inference (low confidence): User lands on the equivalent page on app.wingify.com.</td><td><span class="basis inf">Inference (low confidence)</span></td></tr><tr><td class="gid">TC_063</td><td><span class="kind k-added">Added</span></td><td>Verify an active session is honored when app.vwo.com is opened</td><td>Inference (low confidence): User reaches the dashboard without logging in again.</td><td><span class="basis inf">Inference (low confidence)</span></td></tr><tr><td class="gid">TC_001</td><td><span class="kind k-updated">Updated</span></td><td>Verify login page loads with VWO-branded login form</td><td><span class="old">1. Navigate to https://app.vwo.com</span><br>→ 1. Navigate to https://app.wingify.com/#/login</td><td><span class="basis ver">Verified (PRD)</span></td></tr><tr><td class="gid">TC_006</td><td><span class="kind k-updated">Updated</span></td><td>Verify login with valid registered email and valid password</td><td><span class="old">1. Navigate to https://app.vwo.com</span><br>→ 1. Navigate to https://app.wingify.com/#/login</td><td><span class="basis ver">Verified (PRD)</span></td></tr><tr><td class="gid">TC_013</td><td><span class="kind k-updated">Updated</span></td><td>Verify session persists after browser restart when Remember Me is checked</td><td><span class="old">5. Reopen browser and navigate to https://app.vwo.com</span><br>→ 5. Reopen browser and navigate to https://app.wingify.com/#/login</td><td><span class="basis ver">Verified (PRD)</span></td></tr><tr><td class="gid">TC_014</td><td><span class="kind k-updated">Updated</span></td><td>Verify session behavior after browser restart when Remember Me is unchecked</td><td><span class="old">5. Reopen browser and navigate to https://app.vwo.com</span><br>→ 5. Reopen browser and navigate to https://app.wingify.com/#/login</td><td><span class="basis inf">Inference (low confidence)</span></td></tr><tr><td class="gid">TC_038</td><td><span class="kind k-updated">Updated</span></td><td>Verify login page is served only over HTTPS</td><td><span class="old">1. Navigate to http://app.vwo.com (plain HTTP)</span><br>→ 1. Navigate to http://app.wingify.com/#/login (plain HTTP)</td><td><span class="basis ver">Verified (PRD)</span></td></tr><tr><td class="gid">TC_044</td><td><span class="kind k-updated">Updated</span></td><td>Verify first input field is auto-focused on page load</td><td><span class="old">1. Load https://app.vwo.com</span><br>→ 1. Load https://app.wingify.com/#/login</td><td><span class="basis ver">Verified (PRD)</span></td></tr><tr><td class="gid">TC_052</td><td><span class="kind k-updated">Updated</span></td><td>Verify login page loads within 2 seconds</td><td><span class="old">2. Load https://app.vwo.com</span><br>→ 2. Load https://app.wingify.com/#/login</td><td><span class="basis ver">Verified (PRD)</span></td></tr></tbody></table></div>
+
+<h2>Gaps closed and gaps raised</h2>
+<div class="tbl"><table>
+<thead><tr><th>ID</th><th>Status</th><th>Information</th></tr></thead>
+<tbody><tr><td class="gid">G39</td><td><span class="kind k-resolved">Resolved</span></td><td>app.wingify.com is not mentioned in the PRD; its relation to app.vwo.com is unknown</td></tr><tr><td class="gid">G45</td><td><span class="kind k-new">New</span></td><td>Redirect mechanism from app.vwo.com (HTTP status code, chain, HSTS)</td></tr><tr><td class="gid">G46</td><td><span class="kind k-new">New</span></td><td>Whether app.vwo.com deep links keep their path / hash / query after redirect</td></tr><tr><td class="gid">G47</td><td><span class="kind k-new">New</span></td><td>Whether sessions / cookies carry across app.vwo.com and app.wingify.com</td></tr></tbody></table></div>
+
+<h2>What would improve the test cases most next</h2>
+<div class="card"><ul>
+<li>Answers to the open gaps that affect P1 cases, especially error message wording, password rules, session timeout and the brute-force lockout limit. These affect more test cases than any other information.</li>
+<li>How the redirect works (G45–G47): the status code, whether old deep links keep their path, and whether a login on one domain carries over to the other.</li>
+<li>A test environment and test accounts, so the 63 cases can be run. None have been run yet.</li>
+</ul></div>
+
+<footer>Generated from <code>Test_Cases_with_anti-hallucination_rules.xlsx</code> (v1) and
+<code>Test_Cases_with_anti-hallucination_rules_v2.xlsx</code> (v2). Source: VWO Login Dashboard PRD + user input of 2026-11-18.</footer>
+</main>
+</body>
+</html>
