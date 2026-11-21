@@ -1,5 +1,7 @@
+# Secrets / local config
+.env
+# OS / editor
 .vscode/
-.env, 
-.DS_Store, 
-Thumbs.db,
+.DS_Store
 .idea/
+Thumbs.db
