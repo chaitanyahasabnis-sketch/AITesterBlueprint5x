@@ -25,7 +25,9 @@ Your job is analysis + drafting + surfacing what is missing, not silent completi
 ## Workflow (follow in order)
 
 ### 1. Fetch the ticket
-- If a JIRA key is given (e.g. `KAN-4`), fetch it, run `scripts/fetch_jira.sh KAN-4` (needs `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_TOKEN` in the .env file). If it not works, ask the user to paste the ticket body — **do not invent ticket content.**
+- If a JIRA key is given (e.g. `KAN-4`), fetch it by running `python scripts/fetch-jira.py KAN-4` (works on any OS, no extra installs). `scripts/fetch-jira.sh KAN-4` is an alternative where `curl` and `jq` are available.
+- Both scripts need `JIRA_BASE_URL`, `JIRA_EMAIL` and `JIRA_API_TOKEN`, set in the shell or in a `.env` file (copy `.env.example` from this skill folder).
+- If the fetch does not work, show the error and ask the user to paste the ticket body — **do not invent ticket content.**
 - Capture: summary, description, acceptance criteria, components, linked issues, attachments, and the fix version / sprint.
 
 ### 2. Analyze the Ticket for acceptance criteria
@@ -60,7 +62,8 @@ End with a **Human Review Gate**:
 5. Risks & Assumptions
 6. Entry / Exit criteria
 --- HUMAN REVIEW GATE ---
-Assumptions made / Open questions / "Approve or edit before I continue" add the comapny info and logo also in the output present in the `misc/company.png`
+Assumptions made / Open questions / "Approve or edit before I continue"
+Also add the company info and the logo from `misc/company.png` to the output.
 ```
 ## Guardrails and Security
 - Never mark the plan "final" — a human owns sign-off.
@@ -70,7 +73,9 @@ Assumptions made / Open questions / "Approve or edit before I continue" add the 
 ## References
 - `references/requirement-checklist.md` — the gap-analysis checklist
 - `references/test-plan-template.md` — the plan template to fill
-- `scripts/fetch_jira.sh` — pull a ticket over the JIRA REST API
+- `scripts/fetch-jira.py` — pull a ticket over the JIRA REST API (standard-library Python)
+- `scripts/fetch-jira.sh` — same, using curl + jq
+- `.env.example` — template for the Jira credentials
 
 
 ## Anti Hallucination Rules

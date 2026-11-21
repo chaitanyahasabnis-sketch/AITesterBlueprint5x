@@ -4,8 +4,8 @@ Which prompt produced which output. Add a row each time you run a prompt.
 
 | Date | Prompt file | Framework | Output | Notes |
 |------|-------------|-----------|--------|-------|
-| [Requires clarification] | `CLEAR.md` | CLEAR | `output/VWO_Login_Test_Cases.docx`, `output/VWO_Login_Test_Cases.xlsx` | Email + password test cases with P0/P1/P2 priority |
-| [Requires clarification] | `CRISP.md` | CRISP | `output/VWO_Login_Bug_Report.docx` | Hypothetical training bug: empty password submits without validation |
+| 2026-11-14 | `CLEAR.md` | CLEAR | `output/VWO_Login_Test_Cases.docx`, `output/VWO_Login_Test_Cases.xlsx` | Email + password test cases with P0/P1/P2 priority |
+| 2026-11-14 | `CRISP.md` | CRISP | `output/VWO_Login_Bug_Report.docx` | Hypothetical training bug: empty password submits without validation |
 | 2026-11-21 | `STAR.md` + `Template.md` | STAR | `output/VWO_Login_Functional_Test_Plan.docx` | 5 supplied requirements → 11 scenarios; 6 open questions logged |
 
 ## How to run a prompt

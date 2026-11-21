@@ -12,7 +12,7 @@ You Are QA expert having more than 15 years of experience in test desing , test 
 ...
 Do NOT:
 -  just follow Attached PRD Docs. 
-D:\MyGitHub\AITesterBlueprint5x\Chapter_02_Prompt_Engineering\resources\Product Requirements Document_ VWO Login Dashboard.pdf
+`Chapter_02_Prompt_Engineering/resources/Product Requirements Document_ VWO Login Dashboard.pdf`
 
 
 ### C — Context
