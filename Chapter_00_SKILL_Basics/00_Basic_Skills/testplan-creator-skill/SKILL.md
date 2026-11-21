@@ -1,8 +1,8 @@
 ---
-name: "Test Plan "
-description: "Test Plan Creation as per user requirement."
+name: "testplan-creator-skill"
+description: "Create a risk-driven test plan from a PRD, user story or feature description. Use when the user says 'create a test plan for X', 'plan testing for this feature', or shares requirements and asks what should be tested."
 version: "1.0.0"
-author: "Chaitanya"
+author: "Chaitanya Hasabnis"
 license: "MIT"
 tags:
   - testplan

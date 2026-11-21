@@ -28,8 +28,8 @@ flowchart LR
 AITesterBlueprint5x/
 ├── Chapter_00_SKILL_Basics/              # Authoring and using skills
 │   ├── 00_Basic_Skills/                  # PRD-driven skills
-│   │   ├── testcase-creator-skill/       # testcases_skills.md: test cases from a PRD
-│   │   └── testplan-creator-skill/       # SKILLS.md: test plan from a PRD, plus sample output/
+│   │   ├── testcase-creator-skill/       # SKILL.md: test cases from a PRD
+│   │   └── testplan-creator-skill/       # SKILL.md: test plan from a PRD, plus sample output/
 │   ├── 01_Advanced_Skills/
 │   │   └── testplan-creator-skill_a/     # Jira-driven test plan (fetch → gap analysis → review gate)
 │   │       ├── SKILL.md
@@ -57,15 +57,22 @@ AITesterBlueprint5x/
 │   ├── STAR.md                           # STAR prompt → VWO login functional test plan
 │   ├── CLEAR.md                          # CLEAR prompt → VWO login test cases
 │   ├── CRISP.md                          # CRISP prompt → VWO login bug report
-│   ├── TestPlanTemlate.md                # Test-plan template referenced by the prompts
+│   ├── Template.md                       # 12-section test-plan template referenced by STAR.md
+│   ├── Templates/                        # STAR / CLEAR / CRISP framework definitions
+│   ├── 00_context-vwo/                   # Context pack: project, feature, testing, constraints
+│   ├── Reusable_Templates/               # 18 prompt templates
+│   │   ├── testing/                      # Basic, PRD, API, negative, security, regression
+│   │   ├── bugs/                         # Report, classification, analysis, review, notes→bug, guardrail
+│   │   └── api/                          # Suite, validation, auth, contract, performance, errors
+│   ├── MyNotes.md                        # Prompt run log
 │   └── output/                           # Generated DOCX / XLSX deliverables
-├── learnings/                            # Dated learning journal (see Agents.md)
-└── Agents.md                             # Rules for the automatic learning journal
+├── learnings/                            # Dated learning journal (see AGENTS.md)
+└── AGENTS.md                             # Rules for the automatic learning journal
 ```
 
 ## Chapter 00 — Skill Basics
 
-Skills are reusable instruction modules that the agent loads on demand. Each lives in its own folder with a Markdown file that declares frontmatter (`name`, `description`, `version`, `author`, `license`, `tags`), followed by the instructions the agent follows.
+Skills are reusable instruction modules that the agent loads on demand. Each lives in its own folder with a `SKILL.md` file that declares frontmatter (`name`, `description`, `version`, `author`, `license`, `tags`), followed by the instructions the agent follows.
 
 ### Basic skills: `Chapter_00_SKILL_Basics/00_Basic_Skills/`
 
@@ -178,9 +185,24 @@ flowchart TD
     F -->|STAR| SP["Test plan"]
     F -->|CLEAR| CL["Test cases"]
     F -->|CRISP| CR["Bug report<br/>repro steps + provisional severity"]
+    SP --> DOC1["output/VWO_Login_Functional_Test_Plan.docx"]
     CL --> DOC2["output/VWO_Login_Test_Cases.{docx,xlsx}"]
     CR --> DOC3["output/VWO_Login_Bug_Report.docx"]
 ```
+
+### Reusable prompt library
+
+| Folder | What it holds |
+|--------|---------------|
+| `Template.md` | 12-section test-plan skeleton (document control → approvals) used by `STAR.md` |
+| `Templates/` | Definitions of STAR, CLEAR and CRISP: letter meanings, when to use, fill-in block, example |
+| `00_context-vwo/` | Four context files (project, feature, testing, constraints) filled from the VWO PRD; gaps marked *Requires clarification* |
+| `Reusable_Templates/testing/` | Basic TC generation, comprehensive PRD coverage, API, negative, security, regression selection |
+| `Reusable_Templates/bugs/` | Basic report, classification, analysis, report review, notes→bug, anti-hallucination reminder |
+| `Reusable_Templates/api/` | Test suite, validation, authentication, contract, performance, error handling |
+| `MyNotes.md` | Run log: which prompt produced which output |
+
+Each reusable template follows the same Role · Task · Constraints · Format · Input shape and carries the anti-hallucination constraints from Chapter 02.
 
 All three prompts share the same guardrails:
 
@@ -191,12 +213,13 @@ All three prompts share the same guardrails:
 
 ## Learning Journal
 
-`learnings/` holds one dated Markdown file per completed task, in the format defined by `Agents.md`. Each file covers the objective, tools, steps, code, challenges, learnings and verification. Current entries:
+`learnings/` holds one dated Markdown file per completed task, in the format defined by `AGENTS.md`. Each file covers the objective, tools, steps, code, challenges, learnings and verification. Current entries:
 
 - VWO-49 Passkey & SSO test plan and test cases
 - VWO login test cases with RICE-POT (no hallucination)
 - VWO login test cases with the anti-hallucination gap register
 - VWO login test cases v2 after the domain-redirect information
+- Chapter 03 prompt library, STAR test plan and naming fixes
 
 ## Core Principles
 
